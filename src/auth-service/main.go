@@ -1,8 +1,8 @@
 package main
 
 import (
-	"log"
 	"umai-auth-service/db"
+	"umai-auth-service/middleware"
 	"umai-auth-service/transport/rest"
 
 	"github.com/gin-gonic/gin"
@@ -13,13 +13,14 @@ type Server struct {
 }
 
 func (s *Server) Init(r *gin.Engine) {
+	r.Use(middleware.Recover())
 	if err := godotenv.Load(); err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
-	_, err := db.MysqlConn()
+	_, err := db.MysqlConn() //db dependency
 
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 
 	rest.AuthRoutes(r)

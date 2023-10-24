@@ -8,11 +8,11 @@ import (
 
 type User struct {
 	common.SqlModel
-	Name     string `json:"name" gorm:"column:name;"`
-	Email    string `json:"email" gorm:"column:email;"`
-	Password string `json:"password,omitempty" gorm:"column:password;"`
-	Phone    string `json:"phone" gorm:"column:phone;"`
-	Role     Role   `json:"-" gorm:"column:role;"`
+	Name     string  `json:"name" gorm:"column:name;"`
+	Email    string  `json:"email" gorm:"column:email;"`
+	Password string  `json:"password,omitempty" gorm:"column:password;"`
+	Phone    string  `json:"phone" gorm:"column:phone;"`
+	Role     *string `json:"-" gorm:"column:role;"`
 }
 
 func (User) TableName() string {
@@ -39,26 +39,9 @@ func (u *User) SanitizePassword() {
 	u.Password = ""
 }
 
-type Role int
-
 const (
-	RoleUser Role = iota
-	RoleRestaurant
-	RoleShipper
-	RoleAdmin
+	RoleUser       = "user"
+	RoleRestaurant = "restaurant"
+	RoleShipper    = "shipper"
+	RoleAdmin      = "admin"
 )
-
-func (role Role) String() string {
-	switch role {
-	case RoleUser:
-		return "user"
-	case RoleRestaurant:
-		return "restaurant"
-	case RoleShipper:
-		return "shipper"
-	case RoleAdmin:
-		return "admin"
-	default:
-		return "user"
-	}
-}

@@ -7,10 +7,10 @@ import (
 )
 
 type SqlModel struct {
-	ID          uint64     `json:"-" gorm:"column:id"`
-	FakeID      string     `json:"id" gorm:"-"`
-	CreatedTime *time.Time `json:"created_time" gorm:"column:created_time;"`
-	UpdatedTime *time.Time `json:"updated_time" gorm:"column:updated_time;"`
+	ID        uint64    `json:"-" gorm:"column:id"`
+	FakeID    string    `json:"id" gorm:"-"`
+	UpdatedAt time.Time `gorm:"column:updated_at" json:"updated_at,omitempty"`
+	CreatedAt time.Time `gorm:"column:created_at" json:"created_at,omitempty"`
 }
 
 func (s *SqlModel) EncodeId() {

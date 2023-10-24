@@ -3,6 +3,7 @@ package jwt
 import (
 	"fmt"
 	"time"
+	"umai-auth-service/common"
 
 	"github.com/golang-jwt/jwt/v5"
 )
@@ -71,11 +72,14 @@ func (j *jwtProvider) Validate(myToken string) (*Claims, error) {
 	var uClaims *Claims
 	res, err := jwt.ParseWithClaims(myToken, uClaims, func(t *jwt.Token) (interface{}, error) { return []byte(j.secret), nil })
 	if err != nil {
-		return nil, err //Invalid token
+		if err == jwt.ErrTokenExpired {
+			return nil, common.ErrJWTExpired
+		}
+		return nil, err
 	}
 
 	if !res.Valid {
-		return nil, err //Invalid token
+		return nil, common.InvalidJWTToken //Invalid token
 	}
 
 	claims := res.Claims.(*Claims)

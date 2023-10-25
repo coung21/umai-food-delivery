@@ -25,6 +25,8 @@ func (u *authUC) Register(user *model.User) (*model.User, error) {
 		return nil, common.InternalServerError
 	}
 
+	user.Role.Default()
+
 	createdUser, err := u.authRepo.InsertUser(user)
 	if err != nil {
 		return nil, err

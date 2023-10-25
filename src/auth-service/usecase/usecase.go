@@ -20,8 +20,6 @@ func NewAuthUC(repo auth.Repository, tokenprovider jwt.TokenProvider) *authUC {
 func (u *authUC) Register(ctx context.Context, user *model.User) (*model.User, error) {
 	if existUser, err := u.authRepo.FindUserByEmail(ctx, user.Email); existUser != nil && err == nil {
 		return nil, common.ExistsEmailError
-	} else if err != nil {
-		return nil, common.InternalServerError
 	}
 
 	if err := user.HashPassword(); err != nil {

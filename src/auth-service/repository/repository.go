@@ -17,9 +17,8 @@ func NewAuthRepo(db *gorm.DB) *authRepo {
 
 func (r *authRepo) FindUserByEmail(ctx context.Context, email string) (*model.User, error) {
 	var user model.User
-	result := r.db.Where("email = ?", email).First(&user)
-	if result.Error != nil {
-		return nil, result.Error
+	if err := r.db.Where("email = ?", email).First(&user).Error; err != nil {
+		return nil, err
 	}
 	return &user, nil
 }

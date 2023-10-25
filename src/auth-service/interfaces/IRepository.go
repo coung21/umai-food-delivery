@@ -1,8 +1,11 @@
 package auth
 
-import "umai-auth-service/model"
+import (
+	"context"
+	"umai-auth-service/model"
+)
 
 type Repository interface {
-	FindUserByEmail(email string) (*model.User, error)
-	InsertUser(user *model.User) (*model.User, error)
+	FindUserByEmail(ctx context.Context, email string) (*model.User, error)
+	InsertUser(ctx context.Context, user *model.User) (*model.User, error)
 }

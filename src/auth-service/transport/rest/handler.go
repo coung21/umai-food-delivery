@@ -27,7 +27,7 @@ func (h *authHandler) Register() gin.HandlerFunc {
 		}
 
 		//call biz
-		newUser, err := h.authUC.Register(&user)
+		newUser, err := h.authUC.Register(ctx.Request.Context(), &user)
 		if err != nil {
 			if err.Error() == common.ExistsEmailError.Error() {
 				ctx.JSON(http.StatusConflict, common.NewRestErr(http.StatusConflict, err.Error(), err))

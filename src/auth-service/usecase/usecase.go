@@ -1,6 +1,7 @@
 package usecase
 
 import (
+	"context"
 	"umai-auth-service/common"
 	jwt "umai-auth-service/component"
 	auth "umai-auth-service/interfaces"
@@ -16,9 +17,11 @@ func NewAuthUC(repo auth.Repository, tokenprovider jwt.TokenProvider) *authUC {
 	return &authUC{authRepo: repo, tokenProvider: tokenprovider}
 }
 
-func (u *authUC) Register(user *model.User) (*model.User, error) {
-	if existUser, err := u.authRepo.FindUserByEmail(user.Email); existUser != nil && err == nil {
+func (u *authUC) Register(ctx context.Context, user *model.User) (*model.User, error) {
+	if existUser, err := u.authRepo.FindUserByEmail(ctx, user.Email); existUser != nil && err == nil {
 		return nil, common.ExistsEmailError
+	} else if err != nil {
+		return nil, common.InternalServerError
 	}
 
 	if err := user.HashPassword(); err != nil {
@@ -27,7 +30,7 @@ func (u *authUC) Register(user *model.User) (*model.User, error) {
 
 	user.Role.Default()
 
-	createdUser, err := u.authRepo.InsertUser(user)
+	createdUser, err := u.authRepo.InsertUser(ctx, user)
 	if err != nil {
 		return nil, err
 	}

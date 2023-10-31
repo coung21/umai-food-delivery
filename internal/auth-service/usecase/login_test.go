@@ -41,7 +41,7 @@ func Test_UcLogin(t *testing.T) {
 			t.Fatal(err)
 		}
 		if got.ID != 1 {
-			t.Errorf("authUC.Login() should return model.User.ID = 2, but got = %d", got.ID)
+			t.Errorf("authUC.Login() should return model.User.ID = 1, but got = %d", got.ID)
 		}
 
 		if got.Name != got.Name {

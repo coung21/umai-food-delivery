@@ -13,11 +13,15 @@ type User struct {
 	Email    string `json:"email" gorm:"column:email;"`
 	Password string `json:"password,omitempty" gorm:"column:password;"`
 	Phone    string `json:"phone" gorm:"column:phone;"`
-	Role     Role   `json:"-" gorm:"column:role;"`
+	Role     string `json:"-" gorm:"column:role;"`
 }
 
 func (User) TableName() string {
 	return "users"
+}
+
+func (u *User) DefaultRole() {
+	u.Role = RoleCustomer
 }
 
 func (u *User) HashPassword() error {
@@ -50,14 +54,8 @@ type UserWithToken struct {
 	Token jwt.Token `json:"token"`
 }
 
-type Role string
-
-func (r *Role) Default() {
-	*r = RoleUser
-}
-
 const (
-	RoleUser       = "customer"
+	RoleCustomer   = "customer"
 	RoleRestaurant = "restaurant"
 	RoleShipper    = "shipper"
 	RoleAdmin      = "admin"

@@ -46,7 +46,7 @@ func (j *jwtProvider) NewPayLoad(id int, role string) *TokenPayload {
 
 func (j *jwtProvider) GenerateToken(payload *TokenPayload, expiry int) (*Token, error) {
 	now := time.Now()
-	t := jwt.NewWithClaims(jwt.SigningMethodES256, Claims{
+	t := jwt.NewWithClaims(jwt.SigningMethodHS256, Claims{
 		ID:   payload.ID,
 		Role: payload.Role,
 		RegisteredClaims: jwt.RegisteredClaims{

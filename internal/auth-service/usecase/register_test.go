@@ -16,14 +16,14 @@ func Test_UcRegister(t *testing.T) {
 	tokenprovider := jwt.NewJWTProvider("ramdom-key")
 	mockRepo := &mocks.UserRepoMock{
 		MockFindUserByEmail: func(ctx context.Context, email string) (*model.User, error) {
-			foundUser := &model.User{SqlModel: common.SqlModel{ID: 1, CreatedAt: now, UpdatedAt: now}, Name: "Joe Doe", Email: "joed@mail.com", Password: "12345", Role: "customer"}
+			foundUser := &model.User{SqlModel: common.SqlModel{ID: 1, CreatedAt: now, UpdatedAt: now}, Name: "Joe Doe", Email: "joed@mail.com", Password: "12345", Role: model.RoleCustomer}
 			if email != foundUser.Email {
-				return nil, common.ExistsEmailError
+				return nil, common.NotExistAccout
 			}
 			return foundUser, nil
 		},
 		MockInsertUser: func(ctx context.Context, user *model.User) (*model.User, error) {
-			createdUser := &model.User{SqlModel: common.SqlModel{ID: 2, CreatedAt: now, UpdatedAt: now}, Name: user.Name, Email: user.Email, Password: user.Password}
+			createdUser := &model.User{SqlModel: common.SqlModel{ID: 2, CreatedAt: now, UpdatedAt: now}, Name: user.Name, Email: user.Email, Password: user.Password, Role: user.Role}
 			return createdUser, nil
 		},
 	}
@@ -57,6 +57,10 @@ func Test_UcRegister(t *testing.T) {
 		if got.Password == userInput.Password || got.Password != "" {
 			t.Errorf("authUC.Register() should return model.User.Password = '', but got = %s", got.Password)
 		}
+
+		if got.Role != model.RoleCustomer {
+			t.Errorf("authUC.Register() should return model.Role = 'customer', but got = %v", got.Role)
+		}
 	})
 
 	t.Run("Existed email registration", func(t *testing.T) {
@@ -65,7 +69,7 @@ func Test_UcRegister(t *testing.T) {
 		got, err := uc.Register(context.Background(), userInput)
 
 		if got != nil && err == nil {
-			t.Errorf("authUC.Register() should return model.User.Password = '', but got = %s", got.Password)
+			t.Errorf("authUC.Register() should return error existed email")
 		}
 	})
 }

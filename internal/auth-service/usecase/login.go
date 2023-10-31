@@ -3,6 +3,7 @@ package usecase
 import (
 	"common"
 	"context"
+	"log"
 	"umai-auth-service/model"
 )
 
@@ -19,12 +20,16 @@ func (u *authUC) Login(ctx context.Context, cred *model.LoginCredentials) (*mode
 		return nil, common.WrongPassword
 	}
 
-	payload := u.tokenProvider.NewPayLoad(int(user.ID), string(user.Role))
+	payload := u.tokenProvider.NewPayLoad(int(user.ID), user.Role)
 
 	token, err := u.tokenProvider.GenerateToken(payload, u.expToken)
 	if err != nil {
+		log.Fatal(err)
 		return nil, common.InvalidJWTClaims
 	}
+
+	user.EncodeId()
+	user.SanitizePassword()
 
 	return &model.UserWithToken{
 		User:  *user,

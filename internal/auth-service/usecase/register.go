@@ -15,7 +15,7 @@ func (u *authUC) Register(ctx context.Context, user *model.User) (*model.User, e
 		return nil, common.InternalServerError
 	}
 
-	user.Role.Default()
+	user.DefaultRole()
 
 	createdUser, err := u.authRepo.InsertUser(ctx, user)
 	if err != nil {

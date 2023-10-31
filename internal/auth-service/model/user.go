@@ -2,6 +2,7 @@ package model
 
 import (
 	"common"
+	jwt "umai-auth-service/component"
 
 	"golang.org/x/crypto/bcrypt"
 )
@@ -37,6 +38,16 @@ func (u *User) ComparePassword(password string) bool {
 
 func (u *User) SanitizePassword() {
 	u.Password = ""
+}
+
+type LoginCredentials struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
+type UserWithToken struct {
+	User
+	Token jwt.Token `json:"token"`
 }
 
 type Role string

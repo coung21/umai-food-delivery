@@ -29,7 +29,7 @@ func (s *Server) Init(r *gin.Engine) {
 
 	tokenPro := jwt.NewJWTProvider(os.Getenv("SECRET_KEY"))
 	authRepo := repository.NewAuthRepo(db)
-	authUc := usecase.NewAuthUC(authRepo, tokenPro)
+	authUc := usecase.NewAuthUC(authRepo, tokenPro, 24*10)
 	authHdl := rest.NewAuthHandler(authUc)
 
 	rest.AuthRoutes(r, authHdl)

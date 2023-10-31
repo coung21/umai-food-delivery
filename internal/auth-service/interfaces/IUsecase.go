@@ -7,4 +7,5 @@ import (
 
 type Usecase interface {
 	Register(ctx context.Context, user *model.User) (*model.User, error)
+	Login(ctx context.Context, cred *model.LoginCredentials) (*model.UserWithToken, error)
 }

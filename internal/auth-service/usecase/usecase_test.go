@@ -27,7 +27,7 @@ func Test_UcRegister(t *testing.T) {
 			return createdUser, nil
 		},
 	}
-	uc := NewAuthUC(mockRepo, tokenprovider)
+	uc := NewAuthUC(mockRepo, tokenprovider, 24*10)
 
 	t.Run("Valid registration", func(t *testing.T) {
 		userInput := &model.User{Name: "Alice", Email: "alice@mail.com", Password: "12345"}

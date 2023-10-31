@@ -11,6 +11,7 @@ import (
 type TokenProvider interface {
 	GenerateToken(payload *TokenPayload, expiry int) (*Token, error)
 	Validate(myToken string) (*Claims, error)
+	NewPayLoad(id int, role string) *TokenPayload
 }
 type jwtProvider struct {
 	secret string
@@ -36,6 +37,13 @@ type Token struct {
 	Expiry  int       `json:"token_expiry"`
 }
 
+func (j *jwtProvider) NewPayLoad(id int, role string) *TokenPayload {
+	return &TokenPayload{
+		ID:   id,
+		Role: role,
+	}
+}
+
 func (j *jwtProvider) GenerateToken(payload *TokenPayload, expiry int) (*Token, error) {
 	now := time.Now()
 	t := jwt.NewWithClaims(jwt.SigningMethodES256, Claims{
@@ -50,9 +58,6 @@ func (j *jwtProvider) GenerateToken(payload *TokenPayload, expiry int) (*Token, 
 
 	aToken, err := t.SignedString([]byte(j.secret))
 	if err != nil {
-		if err == jwt.ErrTokenExpired {
-
-		}
 		return nil, err
 	}
 

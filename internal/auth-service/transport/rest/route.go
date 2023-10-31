@@ -8,7 +8,7 @@ func AuthRoutes(r *gin.Engine, handlers *authHandler) {
 		auth := v1.Group("/auth")
 		{
 
-			auth.POST("/register", handlers.Register())
+			auth.POST("/register", handlers.RegisterHdl())
 
 		}
 	}

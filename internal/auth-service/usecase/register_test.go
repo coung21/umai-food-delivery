@@ -3,7 +3,6 @@ package usecase
 import (
 	"common"
 	"context"
-	"strconv"
 	"testing"
 	"time"
 	jwt "umai-auth-service/component"
@@ -48,10 +47,6 @@ func Test_UcRegister(t *testing.T) {
 
 		if got.Email != userInput.Email {
 			t.Errorf("authUC.Register() should return model.User.Email = %s, but got = %s", userInput.Email, got.Email)
-		}
-
-		if got.FakeID == strconv.Itoa(2) {
-			t.Errorf("authUC.Register() should return model.User.FakeID is a encoded id, but got = %v", got.FakeID)
 		}
 
 		if got.Password == userInput.Password || got.Password != "" {

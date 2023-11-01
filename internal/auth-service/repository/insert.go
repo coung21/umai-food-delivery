@@ -11,3 +11,19 @@ func (r *authRepo) InsertUser(ctx context.Context, user *model.User) (*model.Use
 	}
 	return user, nil
 }
+
+func (r *authRepo) InsertRestaurant(ctx context.Context, res *model.Restaurant) (*model.Restaurant, error) {
+	db := r.db.Begin()
+
+	if err := db.Table(res.TableName()).Create(res).Error; err != nil {
+		db.Rollback()
+		return nil, err
+	}
+
+	if err := db.Commit().Error; err != nil {
+		db.Rollback()
+		return nil, err
+	}
+
+	return res, nil
+}

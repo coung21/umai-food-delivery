@@ -28,7 +28,6 @@ func (u *authUC) Login(ctx context.Context, cred *model.LoginCredentials) (*mode
 		return nil, common.InvalidJWTClaims
 	}
 
-	user.EncodeId()
 	user.SanitizePassword()
 
 	return &model.UserWithToken{

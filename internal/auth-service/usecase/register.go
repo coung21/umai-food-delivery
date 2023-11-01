@@ -22,7 +22,6 @@ func (u *authUC) Register(ctx context.Context, user *model.User) (*model.User, e
 		return nil, err
 	}
 
-	createdUser.EncodeId()
 	createdUser.SanitizePassword()
 
 	return createdUser, nil

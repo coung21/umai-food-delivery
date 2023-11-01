@@ -23,6 +23,9 @@ func (User) TableName() string {
 func (u *User) DefaultRole() {
 	u.Role = RoleCustomer
 }
+func (u *User) SetRestaurantRole() {
+	u.Role = RoleRestaurant
+}
 
 func (u *User) HashPassword() error {
 	hashPassword, err := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)

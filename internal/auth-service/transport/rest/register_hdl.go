@@ -29,6 +29,6 @@ func (h *authHandler) RegisterHdl() gin.HandlerFunc {
 				ctx.JSON(http.StatusInternalServerError, common.NewRestErr(http.StatusInternalServerError, err.Error(), err))
 			}
 		}
-		ctx.JSON(http.StatusCreated, newUser)
+		ctx.JSON(http.StatusCreated, common.NewHttpSuccessResponse(http.StatusCreated, "Register user successfully.", newUser))
 	}
 }

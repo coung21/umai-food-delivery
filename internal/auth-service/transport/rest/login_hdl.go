@@ -23,7 +23,7 @@ func (h *authHandler) LoginHdl() gin.HandlerFunc {
 			return
 		}
 
-		ctx.JSON(http.StatusOK, user)
+		ctx.JSON(http.StatusOK, common.NewHttpSuccessResponse(http.StatusOK, "Log in successfully.", user))
 	}
 
 }

@@ -15,7 +15,7 @@ func AuthRoutes(r *gin.Engine, handlers *authHandler) {
 
 		restaurant := v1.Group("/restaurant")
 		{
-			restaurant.POST("/register")
+			restaurant.POST("/register", handlers.RestaurantRegisHdl())
 		}
 	}
 }

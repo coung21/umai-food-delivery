@@ -30,7 +30,7 @@ func (e ErrResp) Causes() interface{} {
 }
 
 func NewRestErr(status int, err string, causes interface{}) RestError {
-	log.Fatal(causes)
+	log.Println(causes)
 	return ErrResp{
 		ErrStatus: status,
 		ErrError:  err,

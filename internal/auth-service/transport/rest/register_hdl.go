@@ -19,14 +19,15 @@ func (h *authHandler) RegisterHdl() gin.HandlerFunc {
 		//call biz
 		newUser, err := h.authUC.Register(ctx.Request.Context(), &user)
 		if err != nil {
-			if err.Error() == common.ExistsEmailError.Error() {
+			if err == common.ExistsEmailError {
 				ctx.JSON(http.StatusConflict, common.NewRestErr(http.StatusConflict, err.Error(), err))
 				return
-			} else if err.Error() == common.BadRequest.Error() {
+			} else if err == common.BadRequest {
 				ctx.JSON(http.StatusBadRequest, common.NewRestErr(http.StatusBadRequest, err.Error(), err))
 				return
 			} else {
 				ctx.JSON(http.StatusInternalServerError, common.NewRestErr(http.StatusInternalServerError, err.Error(), err))
+				return
 			}
 		}
 		ctx.JSON(http.StatusCreated, common.NewHttpSuccessResponse(http.StatusCreated, "Register user successfully.", newUser))

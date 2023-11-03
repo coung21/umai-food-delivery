@@ -58,6 +58,6 @@ var (
 	ErrJWTExpired         = errors.New("JWT token expired")
 	NotAllowedImageHeader = errors.New("Not allowed image header")
 	NoCookie              = errors.New("not found cookie header")
-	NotExistAccout        = errors.New("Give email doesnt exists")
+	NotExistAccount       = errors.New("Account doesnt exists")
 	WrongPassword         = errors.New("Wrong password")
 )

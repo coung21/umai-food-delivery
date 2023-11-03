@@ -19,7 +19,7 @@ func (h *authHandler) RestaurantRegisHdl() gin.HandlerFunc {
 
 		res, err := h.authUC.RestaurantRegis(ctx.Request.Context(), &restaurant)
 		if err != nil {
-			if err == common.NotExistAccout {
+			if err == common.NotExistAccount {
 				ctx.JSON(http.StatusBadRequest, common.NewRestErr(http.StatusBadRequest, err.Error(), err))
 				return
 			} else {

@@ -13,11 +13,11 @@ import (
 func Test_UcRegister(t *testing.T) {
 	now := time.Now()
 	tokenprovider := jwt.NewJWTProvider("ramdom-key")
-	mockRepo := &mocks.UserRepoMock{
+	mockRepo := &mocks.RepoMock{
 		MockFindUserByEmail: func(ctx context.Context, email string) (*model.User, error) {
 			foundUser := &model.User{SqlModel: common.SqlModel{ID: 1, CreatedAt: now, UpdatedAt: now}, Name: "Joe Doe", Email: "joed@mail.com", Password: "12345", Role: model.RoleCustomer}
 			if email != foundUser.Email {
-				return nil, common.NotExistAccout
+				return nil, common.NotExistAccount
 			}
 			return foundUser, nil
 		},

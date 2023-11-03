@@ -11,7 +11,7 @@ func (u *authUC) Login(ctx context.Context, cred *model.LoginCredentials) (*mode
 	user, err := u.authRepo.FindUserByEmail(ctx, cred.Email)
 
 	if err != nil && user == nil {
-		return nil, common.NotExistAccout
+		return nil, common.NotExistAccount
 	}
 
 	isMatch := user.ComparePassword(cred.Password)

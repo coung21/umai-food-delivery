@@ -15,11 +15,11 @@ func Test_UcLogin(t *testing.T) {
 
 	tokenProvider := jwt.NewJWTProvider("random-key")
 
-	mockRepo := &mocks.UserRepoMock{
+	mockRepo := &mocks.RepoMock{
 		MockFindUserByEmail: func(ctx context.Context, email string) (*model.User, error) {
 			user := &model.User{SqlModel: common.SqlModel{ID: 1, CreatedAt: now, UpdatedAt: now}, Name: "Joe Doe", Email: "joed@mail.com", Password: "1234", Role: model.RoleCustomer}
 			if email != user.Email {
-				return nil, common.NotExistAccout
+				return nil, common.NotExistAccount
 			}
 			user.HashPassword()
 			return user, nil

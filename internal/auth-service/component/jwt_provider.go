@@ -75,19 +75,21 @@ type CustomClaims struct {
 
 func (j *jwtProvider) Validate(myToken string) (*Claims, error) {
 	var uClaims *Claims
-	res, err := jwt.ParseWithClaims(myToken, uClaims, func(t *jwt.Token) (interface{}, error) { return []byte(j.secret), nil })
+	resp, err := jwt.ParseWithClaims(myToken, uClaims, func(t *jwt.Token) (interface{}, error) { return []byte(j.secret), nil })
 	if err != nil {
 		if err == jwt.ErrTokenExpired {
 			return nil, common.ErrJWTExpired
+		} else if err == jwt.ErrSignatureInvalid {
+			return nil, common.InvalidJWTToken
 		}
 		return nil, err
 	}
 
-	if !res.Valid {
+	if !resp.Valid {
 		return nil, common.InvalidJWTToken //Invalid token
 	}
 
-	claims := res.Claims.(*Claims)
+	claims := resp.Claims.(*Claims)
 	return claims, nil
 
 }

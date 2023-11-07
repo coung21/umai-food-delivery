@@ -11,4 +11,5 @@ type Repository interface {
 	FindUserByID(ctx context.Context, id int) (*model.User, error)
 	UpdateRole(ctx context.Context, user *model.User) error
 	InsertRestaurant(ctx context.Context, res *model.Restaurant) (*model.Restaurant, error)
+	UpdateUser(ctx context.Context, olduser *model.User, upd *model.UserUpdate) (*model.User, error)
 }

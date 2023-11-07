@@ -19,3 +19,10 @@ func (r *authRepo) UpdateRole(ctx context.Context, user *model.User) error {
 	}
 	return nil
 }
+
+func (r *authRepo) UpdateUser(ctx context.Context, olduser *model.User, upd *model.UserUpdate) (*model.User, error) {
+	if err := r.db.Model(olduser).Updates(upd).Scan(olduser).Error; err != nil {
+		return nil, err
+	}
+	return olduser, nil
+}

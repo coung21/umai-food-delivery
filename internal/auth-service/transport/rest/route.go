@@ -10,7 +10,7 @@ func AuthRoutes(r *gin.Engine, handlers *authHandler) {
 
 			customer.POST("/register", handlers.RegisterHdl())
 			customer.POST("/login", handlers.LoginHdl())
-
+			customer.PATCH("/update/:id", handlers.UpdateUserHdl())
 		}
 
 		restaurant := v1.Group("/restaurant")

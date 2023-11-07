@@ -8,7 +8,7 @@ import (
 type Repository interface {
 	FindUserByEmail(ctx context.Context, email string) (*model.User, error)
 	InsertUser(ctx context.Context, user *model.User) (*model.User, error)
-	FindUserByID(ctx context.Context, id int64) (*model.User, error)
+	FindUserByID(ctx context.Context, id int) (*model.User, error)
 	UpdateRole(ctx context.Context, user *model.User) error
 	InsertRestaurant(ctx context.Context, res *model.Restaurant) (*model.Restaurant, error)
 }

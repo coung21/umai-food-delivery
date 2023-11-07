@@ -9,11 +9,12 @@ import (
 
 type User struct {
 	common.SqlModel
-	Name     string `json:"name" gorm:"column:name;"`
-	Email    string `json:"email" gorm:"column:email;"`
-	Password string `json:"password,omitempty" gorm:"column:password;"`
-	Phone    string `json:"phone" gorm:"column:phone;"`
-	Role     string `json:"-" gorm:"column:role;"`
+	Name     string        `json:"name" gorm:"column:name;"`
+	Email    string        `json:"email" gorm:"column:email;"`
+	Avatar   *common.Image `json:"avatar" gorm:"column:avatar"`
+	Password string        `json:"password,omitempty" gorm:"column:password;"`
+	Phone    string        `json:"phone" gorm:"column:phone;"`
+	Role     string        `json:"-" gorm:"column:role;"`
 }
 
 func (User) TableName() string {
@@ -55,6 +56,16 @@ type LoginCredentials struct {
 type UserWithToken struct {
 	User
 	Token jwt.Token `json:"token"`
+}
+
+type UserUpdate struct {
+	Name   *string       `json:"name" gorm:"column:name;"`
+	Avatar *common.Image `json:"avatar" gorm:"column:avatar"`
+	Phone  *string       `json:"phone" gorm:"column:phone;"`
+}
+
+func (UserUpdate) TableName() string {
+	return User{}.TableName()
 }
 
 const (

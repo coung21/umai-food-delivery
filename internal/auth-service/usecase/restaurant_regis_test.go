@@ -16,7 +16,7 @@ func Test_RetaurantRes(t *testing.T) {
 	tokenprovider := jwt.NewJWTProvider("random-key")
 
 	mockRepo := &mocks.RepoMock{
-		MockFindUserByID: func(ctx context.Context, id int64) (*model.User, error) {
+		MockFindUserByID: func(ctx context.Context, id int) (*model.User, error) {
 			var foundUser model.User
 			rows := []model.User{
 				{SqlModel: common.SqlModel{ID: 1, CreatedAt: now, UpdatedAt: now}, Name: "Joe Doe", Email: "joed@mail.com", Password: "12345", Role: model.RoleCustomer},

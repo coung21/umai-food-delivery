@@ -7,7 +7,7 @@ import (
 
 type Restaurant struct {
 	common.SqlModel
-	UserID         int64      `json:"user_id" gorm:"column:user_id"`
+	UserID         int        `json:"user_id" gorm:"column:user_id"`
 	RestaurantName string     `json:"restaurant_name" gorm:"column:restaurant_name"`
 	Slogan         string     `json:"slogan" gorm:"column:slogan"`
 	OpenHour       *time.Time `json:"open_hour" gorm:"column:open_hour"`

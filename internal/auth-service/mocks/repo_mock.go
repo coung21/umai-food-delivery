@@ -10,7 +10,7 @@ type RepoMock struct {
 	auth.Repository
 	MockFindUserByEmail  func(ctx context.Context, email string) (*model.User, error)
 	MockInsertUser       func(ctx context.Context, user *model.User) (*model.User, error)
-	MockFindUserByID     func(ctx context.Context, id int64) (*model.User, error)
+	MockFindUserByID     func(ctx context.Context, id int) (*model.User, error)
 	MockUpdateRole       func(ctx context.Context, user *model.User) error
 	MockInsertRestaurant func(ctx context.Context, res *model.Restaurant) (*model.Restaurant, error)
 }
@@ -23,7 +23,7 @@ func (m *RepoMock) InsertUser(ctx context.Context, user *model.User) (*model.Use
 	return m.MockInsertUser(ctx, user)
 }
 
-func (m *RepoMock) FindUserByID(ctx context.Context, id int64) (*model.User, error) {
+func (m *RepoMock) FindUserByID(ctx context.Context, id int) (*model.User, error) {
 	return m.MockFindUserByID(ctx, id)
 }
 

@@ -2,7 +2,6 @@ package rest
 
 import (
 	"common"
-	"fmt"
 	"net/http"
 	"strconv"
 	"umai-auth-service/model"
@@ -13,7 +12,6 @@ import (
 func (h *authHandler) UpdateUserHdl() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		id, err := strconv.Atoi(ctx.Param("id"))
-		fmt.Println(id)
 		if err != nil {
 			ctx.JSON(http.StatusBadRequest, common.NewRestErr(http.StatusBadRequest, err.Error(), err))
 			return

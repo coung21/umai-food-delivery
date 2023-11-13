@@ -4,7 +4,6 @@ import (
 	"os"
 	jwt "umai-auth-service/component"
 	"umai-auth-service/db"
-	"umai-auth-service/middleware"
 	"umai-auth-service/repository"
 	"umai-auth-service/transport/rest"
 	"umai-auth-service/usecase"
@@ -17,7 +16,8 @@ type Server struct {
 }
 
 func (s *Server) Init(r *gin.Engine) {
-	r.Use(middleware.Recover())
+	// r.Use(middleware.Recover())
+	// r.Use(gin.Recovery())
 	if err := godotenv.Load(); err != nil {
 		panic(err)
 	}
@@ -30,7 +30,7 @@ func (s *Server) Init(r *gin.Engine) {
 	tokenPro := jwt.NewJWTProvider(os.Getenv("SECRET_KEY"))
 	authRepo := repository.NewAuthRepo(db)
 	authUc := usecase.NewAuthUC(authRepo, tokenPro, 24*10)
-	authHdl := rest.NewAuthHandler(authUc)
+	authHdl := rest.NewAuthHandler(authUc, authRepo, tokenPro)
 
 	rest.AuthRoutes(r, authHdl)
 }

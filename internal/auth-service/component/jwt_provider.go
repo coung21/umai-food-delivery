@@ -1,7 +1,6 @@
 package jwt
 
 import (
-	"common"
 	"fmt"
 	"time"
 
@@ -22,14 +21,14 @@ func NewJWTProvider(secret string) *jwtProvider {
 }
 
 type TokenPayload struct {
-	ID   int
-	Role string
+	ID   int    `json:"user_id"`
+	Role string `json:"role"`
 }
 
 type Claims struct {
 	jwt.RegisteredClaims
-	ID   int
-	Role string
+	ID   int    `json:"user_id"`
+	Role string `json:"role"`
 }
 type Token struct {
 	Token   string    `json:"token"`
@@ -68,28 +67,18 @@ func (j *jwtProvider) GenerateToken(payload *TokenPayload, expiry int) (*Token, 
 	}, nil
 }
 
-type CustomClaims struct {
-	ID   int
-	Role string
-}
-
 func (j *jwtProvider) Validate(myToken string) (*Claims, error) {
-	var uClaims *Claims
-	resp, err := jwt.ParseWithClaims(myToken, uClaims, func(t *jwt.Token) (interface{}, error) { return []byte(j.secret), nil })
-	if err != nil {
-		if err == jwt.ErrTokenExpired {
-			return nil, common.ErrJWTExpired
-		} else if err == jwt.ErrSignatureInvalid {
-			return nil, common.InvalidJWTToken
+	// var claims *Claims
+	token, err := jwt.ParseWithClaims(myToken, &Claims{}, func(token *jwt.Token) (interface{}, error) {
+		return []byte(j.secret), nil
+	})
+
+	if token != nil {
+		if claims, ok := token.Claims.(*Claims); ok && token.Valid {
+			return claims, nil
 		}
-		return nil, err
 	}
 
-	if !resp.Valid {
-		return nil, common.InvalidJWTToken //Invalid token
-	}
-
-	claims := resp.Claims.(*Claims)
-	return claims, nil
+	return nil, err
 
 }

@@ -55,6 +55,7 @@ var (
 	ExistsEmailError      = errors.New("User with given email already exists")
 	InvalidJWTToken       = errors.New("Invalid JWT token")
 	InvalidJWTClaims      = errors.New("Invalid JWT claims")
+	InvalidAuthHeader     = errors.New("Invalid authenrization header")
 	ErrJWTExpired         = errors.New("JWT token expired")
 	NotAllowedImageHeader = errors.New("Not allowed image header")
 	NoCookie              = errors.New("not found cookie header")

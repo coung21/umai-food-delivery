@@ -1,8 +1,12 @@
 package rest
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+)
 
 func AuthRoutes(r *gin.Engine, handlers *authHandler) {
+
+	// authMdw := middleware.Auth(handlers.tokenProvider, handlers.authRepo)s
 	v1 := r.Group("/v1/auth")
 	{
 		customer := v1.Group("/customer")

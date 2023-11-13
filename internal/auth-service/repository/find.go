@@ -21,3 +21,12 @@ func (r *authRepo) FindUserByID(ctx context.Context, id int) (*model.User, error
 	}
 	return &user, nil
 }
+
+func (r *authRepo) FindRestaurantByID(ctx context.Context, id int) (*model.Restaurant, error) {
+	var res model.Restaurant
+
+	if err := r.db.Where("id = ?", id).First(&res).Error; err != nil {
+		return nil, err
+	}
+	return &res, nil
+}

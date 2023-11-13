@@ -11,4 +11,5 @@ type Usecase interface {
 	RestaurantRegis(ctx context.Context, res *model.Restaurant) (*model.Restaurant, error)
 	UpdateProfile(ctx context.Context, userid int, udp *model.UserUpdate) (*model.User, error)
 	GetProfile(ctx context.Context, id int) (*model.User, error)
+	// GetRestaurent(ctx context.Context, id int) (*model.Restaurant, error)
 }

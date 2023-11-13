@@ -6,7 +6,7 @@ import (
 
 func AuthRoutes(r *gin.Engine, handlers *authHandler) {
 
-	// authMdw := middleware.Auth(handlers.tokenProvider, handlers.authRepo)s
+	// authMdw := middleware.Auth(handlers.tokenProvider, handlers.authRepo)
 	v1 := r.Group("/v1/auth")
 	{
 		customer := v1.Group("/customer")
@@ -21,6 +21,7 @@ func AuthRoutes(r *gin.Engine, handlers *authHandler) {
 		restaurant := v1.Group("/restaurant")
 		{
 			restaurant.POST("/register", handlers.RestaurantRegisHdl())
+			restaurant.GET("/:id", handlers.GetRestaurantHdl())
 		}
 	}
 }

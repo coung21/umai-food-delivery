@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (h *authHandler) GetProfileHdl() gin.HandlerFunc {
+func (h *authHandler) GetRestaurantHdl() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		id, err := strconv.Atoi(ctx.Param("id"))
 		if err != nil {
@@ -16,12 +16,12 @@ func (h *authHandler) GetProfileHdl() gin.HandlerFunc {
 			return
 		}
 
-		user, err := h.authUC.GetProfile(ctx.Request.Context(), id)
+		res, err := h.authUC.GetRestaurant(ctx, id)
 		if err != nil {
 			ctx.JSON(http.StatusBadRequest, common.NewRestErr(http.StatusBadRequest, err.Error(), err))
 			return
 		}
 
-		ctx.JSON(http.StatusOK, common.NewHttpSuccessResponse(http.StatusOK, "Get user data successfully.", user))
+		ctx.JSON(http.StatusOK, common.NewHttpSuccessResponse(http.StatusOK, "Get restaurant data successfully.", res))
 	}
 }

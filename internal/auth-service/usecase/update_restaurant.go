@@ -7,13 +7,13 @@ import (
 )
 
 func (u *authUC) UpdateRestaurant(ctx context.Context, id int, udp *model.RestaurantUpdate) (*model.Restaurant, error) {
-	cuser := ctx.Value(common.CurrentUser).(*model.User)
+	cuserId := ctx.Value(common.CuserId)
 	olddata, err := u.authRepo.FindRestaurantByID(ctx, id)
 	if err != nil && olddata == nil {
 		return nil, common.NotExistAccount
 	}
 
-	if olddata.UserID != cuser.ID {
+	if olddata.UserID != cuserId {
 		return nil, common.Forbidden
 	}
 

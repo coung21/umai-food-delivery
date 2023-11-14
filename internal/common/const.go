@@ -1,5 +1,6 @@
 package common
 
 const (
-	CurrentUser = "current_user"
+	CuserId   = "current_user_id"
+	CuserRole = "current_user_role"
 )

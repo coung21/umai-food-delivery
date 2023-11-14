@@ -12,4 +12,5 @@ type Usecase interface {
 	UpdateProfile(ctx context.Context, userid int, udp *model.UserUpdate) (*model.User, error)
 	GetProfile(ctx context.Context, id int) (*model.User, error)
 	GetRestaurant(ctx context.Context, id int) (*model.Restaurant, error)
+	UpdateRestaurant(ctx context.Context, id int, udp *model.RestaurantUpdate) (*model.Restaurant, error)
 }

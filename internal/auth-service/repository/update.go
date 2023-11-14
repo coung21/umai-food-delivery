@@ -26,3 +26,10 @@ func (r *authRepo) UpdateUser(ctx context.Context, olduser *model.User, upd *mod
 	}
 	return olduser, nil
 }
+
+func (r *authRepo) UpdateRestaurant(ctx context.Context, oldres *model.Restaurant, upd *model.RestaurantUpdate) (*model.Restaurant, error) {
+	if err := r.db.Model(oldres).Updates(upd).Scan(oldres).Error; err != nil {
+		return nil, err
+	}
+	return oldres, nil
+}

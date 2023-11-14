@@ -15,6 +15,7 @@ type RepoMock struct {
 	MockInsertRestaurant   func(ctx context.Context, res *model.Restaurant) (*model.Restaurant, error)
 	MockUpdateUser         func(ctx context.Context, olduser *model.User, upd *model.UserUpdate) (*model.User, error)
 	MockFindRestaurantByID func(ctx context.Context, id int) (*model.Restaurant, error)
+	MockUpdateRestaurant   func(ctx context.Context, oldres *model.Restaurant, upd *model.RestaurantUpdate) (*model.Restaurant, error)
 }
 
 func (m *RepoMock) FindUserByEmail(ctx context.Context, email string) (*model.User, error) {
@@ -43,4 +44,8 @@ func (m *RepoMock) UpdateUser(ctx context.Context, olduser *model.User, upd *mod
 
 func (m *RepoMock) FindRestaurantByID(ctx context.Context, id int) (*model.Restaurant, error) {
 	return m.MockFindRestaurantByID(ctx, id)
+}
+
+func (m *RepoMock) UpdateRestaurant(ctx context.Context, oldres *model.Restaurant, upd *model.RestaurantUpdate) (*model.Restaurant, error) {
+	return m.MockUpdateRestaurant(ctx, oldres, upd)
 }

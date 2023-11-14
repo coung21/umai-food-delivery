@@ -7,7 +7,7 @@ import (
 )
 
 func (u *authUC) UpdateRestaurant(ctx context.Context, id int, udp *model.RestaurantUpdate) (*model.Restaurant, error) {
-	cuser := ctx.Value("current_user").(*model.User)
+	cuser := ctx.Value(common.CurrentUser).(*model.User)
 	olddata, err := u.authRepo.FindRestaurantByID(ctx, id)
 	if err != nil && olddata == nil {
 		return nil, common.NotExistAccount

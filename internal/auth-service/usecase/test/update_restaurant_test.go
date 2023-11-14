@@ -57,7 +57,7 @@ func Test_UpdateRestaurant(t *testing.T) {
 	}
 
 	uc := usecase.NewAuthUC(mockRepo, tokenprovider, 24*10)
-	ctx := context.WithValue(context.Background(), "current_user", &model.User{SqlModel: common.SqlModel{ID: 1}})
+	ctx := context.WithValue(context.Background(), common.CurrentUser, &model.User{SqlModel: common.SqlModel{ID: 1}})
 
 	t.Run("Valid update", func(t *testing.T) {
 		newName := "BeefDamn"

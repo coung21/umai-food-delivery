@@ -45,7 +45,7 @@ func Auth(tokenprovider jwt.TokenProvider, authRepo auth.Repository) gin.Handler
 			return
 		}
 
-		ctx.Set("current_user", user)
+		ctx.Set(common.CurrentUser, user)
 		ctx.Next()
 	}
 }

@@ -8,6 +8,7 @@ import (
 	jwt "umai-auth-service/component"
 	"umai-auth-service/mocks"
 	"umai-auth-service/model"
+	"umai-auth-service/usecase"
 )
 
 func Test_GetProfile(t *testing.T) {
@@ -35,7 +36,7 @@ func Test_GetProfile(t *testing.T) {
 		},
 	}
 
-	uc := NewAuthUC(mockRepo, tokenprovider, 24*10)
+	uc := usecase.NewAuthUC(mockRepo, tokenprovider, 24*10)
 
 	t.Run("Valid get user data", func(t *testing.T) {
 		got, err := uc.GetProfile(context.Background(), 1)

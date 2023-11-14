@@ -9,6 +9,7 @@ import (
 	jwt "umai-auth-service/component"
 	"umai-auth-service/mocks"
 	"umai-auth-service/model"
+	"umai-auth-service/usecase"
 )
 
 func Test_RetaurantRes(t *testing.T) {
@@ -49,7 +50,7 @@ func Test_RetaurantRes(t *testing.T) {
 		},
 	}
 
-	uc := NewAuthUC(mockRepo, tokenprovider, 24*10)
+	uc := usecase.NewAuthUC(mockRepo, tokenprovider, 24*10)
 
 	t.Run("Valid restaurant registration", func(t *testing.T) {
 		resInput := &model.Restaurant{RestaurantName: "JChick", UserID: 1}

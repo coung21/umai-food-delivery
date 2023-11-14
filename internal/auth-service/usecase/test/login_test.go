@@ -8,12 +8,13 @@ import (
 	jwt "umai-auth-service/component"
 	"umai-auth-service/mocks"
 	"umai-auth-service/model"
+	"umai-auth-service/usecase"
 )
 
 func Test_UcLogin(t *testing.T) {
 	now := time.Now()
 
-	tokenProvider := jwt.NewJWTProvider("random-key")
+	tokenprovider := jwt.NewJWTProvider("random-key")
 
 	mockRepo := &mocks.RepoMock{
 		MockFindUserByEmail: func(ctx context.Context, email string) (*model.User, error) {
@@ -26,7 +27,7 @@ func Test_UcLogin(t *testing.T) {
 		},
 	}
 
-	uc := NewAuthUC(mockRepo, tokenProvider, 24*10)
+	uc := usecase.NewAuthUC(mockRepo, tokenprovider, 24*10)
 
 	t.Run("Valid login", func(t *testing.T) {
 		cred := &model.LoginCredentials{

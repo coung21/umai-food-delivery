@@ -9,6 +9,7 @@ import (
 	jwt "umai-auth-service/component"
 	"umai-auth-service/mocks"
 	"umai-auth-service/model"
+	"umai-auth-service/usecase"
 )
 
 func Test_UpdateUser(t *testing.T) {
@@ -48,7 +49,7 @@ func Test_UpdateUser(t *testing.T) {
 		},
 	}
 
-	uc := NewAuthUC(mockRepo, tokenprovider, 24*10)
+	uc := usecase.NewAuthUC(mockRepo, tokenprovider, 24*10)
 
 	t.Run("Valid update profile", func(t *testing.T) {
 		newName := "Joe Dijk"

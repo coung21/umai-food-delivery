@@ -8,6 +8,7 @@ import (
 	jwt "umai-auth-service/component"
 	"umai-auth-service/mocks"
 	"umai-auth-service/model"
+	"umai-auth-service/usecase"
 )
 
 func Test_UcRegister(t *testing.T) {
@@ -26,7 +27,7 @@ func Test_UcRegister(t *testing.T) {
 			return createdUser, nil
 		},
 	}
-	uc := NewAuthUC(mockRepo, tokenprovider, 24*10)
+	uc := usecase.NewAuthUC(mockRepo, tokenprovider, 24*10)
 
 	t.Run("Valid registration", func(t *testing.T) {
 		userInput := &model.User{Name: "Alice", Email: "alice@mail.com", Password: "12345"}

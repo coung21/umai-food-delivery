@@ -44,9 +44,9 @@ func Test_RetaurantRes(t *testing.T) {
 			}
 			return nil
 		},
-		MockInsertRestaurant: func(ctx context.Context, res *model.Restaurant) (*model.Restaurant, error) {
+		MockInsertRestaurant: func(ctx context.Context, res *model.Restaurant) (int, error) {
 			restaurant := &model.Restaurant{SqlModel: common.SqlModel{ID: 2, CreatedAt: now, UpdatedAt: now}, UserID: res.UserID, RestaurantName: res.RestaurantName}
-			return restaurant, nil
+			return restaurant.ID, nil
 		},
 	}
 
@@ -61,17 +61,10 @@ func Test_RetaurantRes(t *testing.T) {
 			log.Fatal(err)
 		}
 
-		if got.ID != 2 {
-			t.Errorf("authUC.RestaurantRegis() should return model.Restaurant.ID = 2 but got %d", got.ID)
+		if got != 2 {
+			t.Errorf("authUC.RestaurantRegis() should return model.Restaurant.ID = 2 but got %d", got)
 		}
 
-		if got.UserID != resInput.UserID {
-			t.Errorf("authUC.RestaurantRegis() should return model.Restaurant.UserID = 1 but got %d", got.UserID)
-		}
-
-		if got.RestaurantName != got.RestaurantName {
-			t.Errorf("authUC.RestaurantRegis() should return model.Restaurant.RestaurantName = %s but got %s", got.RestaurantName, got.RestaurantName)
-		}
 	})
 
 	t.Run("Invalid user role restaurant registration", func(t *testing.T) {
@@ -79,7 +72,7 @@ func Test_RetaurantRes(t *testing.T) {
 
 		got, err := uc.RestaurantRegis(context.Background(), resInput)
 
-		if got != nil && err != common.BadRequest {
+		if got != 0 && err != common.BadRequest {
 			t.Errorf("authUC.RestaurantRegis() should return error: %s", common.BadRequest.Error())
 		}
 	})
@@ -88,7 +81,7 @@ func Test_RetaurantRes(t *testing.T) {
 		resInput := &model.Restaurant{RestaurantName: "JChick", UserID: 10}
 		got, err := uc.RestaurantRegis(context.Background(), resInput)
 
-		if got != nil && err != common.NotExistAccount {
+		if got != 0 && err != common.NotExistAccount {
 			t.Errorf("authUC.RestaurantRegis() should return error: %s", common.NotExistAccount.Error())
 		}
 	})

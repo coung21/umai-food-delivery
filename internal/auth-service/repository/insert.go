@@ -5,25 +5,28 @@ import (
 	"umai-auth-service/model"
 )
 
-func (r *authRepo) InsertUser(ctx context.Context, user *model.User) (*model.User, error) {
-	if err := r.db.Create(user).Error; err != nil {
-		return nil, err
+func (r *authRepo) InsertUser(ctx context.Context, user *model.User) (int, error) {
+	result := r.db.Create(user)
+	if result.Error != nil {
+		return 0, result.Error
 	}
-	return user, nil
+	return user.ID, nil
 }
 
-func (r *authRepo) InsertRestaurant(ctx context.Context, res *model.Restaurant) (*model.Restaurant, error) {
+func (r *authRepo) InsertRestaurant(ctx context.Context, res *model.Restaurant) (int, error) {
 	db := r.db.Begin()
 
-	if err := db.Table(res.TableName()).Create(res).Error; err != nil {
+	result := db.Table(res.TableName()).Create(res)
+
+	if result.Error != nil {
 		db.Rollback()
-		return nil, err
+		return 0, result.Error
 	}
 
 	if err := db.Commit().Error; err != nil {
 		db.Rollback()
-		return nil, err
+		return 0, err
 	}
 
-	return res, nil
+	return res.ID, nil
 }

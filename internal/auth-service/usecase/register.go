@@ -6,24 +6,22 @@ import (
 	"umai-auth-service/model"
 )
 
-func (u *authUC) Register(ctx context.Context, user *model.User) (*model.User, error) {
+func (u *authUC) Register(ctx context.Context, user *model.User) (int, error) {
 	if existUser, err := u.authRepo.FindUserByEmail(ctx, user.Email); existUser != nil && err == nil {
-		return nil, common.ExistsEmailError
+		return 0, common.ExistsEmailError
 	}
 
 	if err := user.HashPassword(); err != nil {
-		return nil, common.InternalServerError
+		return 0, common.InternalServerError
 	}
 
 	user.DefaultRole()
 
-	createdUser, err := u.authRepo.InsertUser(ctx, user)
+	createdUserID, err := u.authRepo.InsertUser(ctx, user)
 	if err != nil {
-		return nil, err
+		return 0, err
 	}
 
-	createdUser.SanitizePassword()
-
-	return createdUser, nil
+	return createdUserID, nil
 
 }

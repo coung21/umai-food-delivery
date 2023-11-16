@@ -9,10 +9,10 @@ import (
 type RepoMock struct {
 	auth.Repository
 	MockFindUserByEmail    func(ctx context.Context, email string) (*model.User, error)
-	MockInsertUser         func(ctx context.Context, user *model.User) (*model.User, error)
+	MockInsertUser         func(ctx context.Context, user *model.User) (int, error)
 	MockFindUserByID       func(ctx context.Context, id int) (*model.User, error)
 	MockUpdateRole         func(ctx context.Context, user *model.User) error
-	MockInsertRestaurant   func(ctx context.Context, res *model.Restaurant) (*model.Restaurant, error)
+	MockInsertRestaurant   func(ctx context.Context, res *model.Restaurant) (int, error)
 	MockUpdateUser         func(ctx context.Context, olduser *model.User, upd *model.UserUpdate) (*model.User, error)
 	MockFindRestaurantByID func(ctx context.Context, id int) (*model.Restaurant, error)
 	MockUpdateRestaurant   func(ctx context.Context, oldres *model.Restaurant, upd *model.RestaurantUpdate) (*model.Restaurant, error)
@@ -22,7 +22,7 @@ func (m *RepoMock) FindUserByEmail(ctx context.Context, email string) (*model.Us
 	return m.MockFindUserByEmail(ctx, email)
 }
 
-func (m *RepoMock) InsertUser(ctx context.Context, user *model.User) (*model.User, error) {
+func (m *RepoMock) InsertUser(ctx context.Context, user *model.User) (int, error) {
 	return m.MockInsertUser(ctx, user)
 }
 
@@ -34,7 +34,7 @@ func (m *RepoMock) UpdateRole(ctx context.Context, user *model.User) error {
 	return m.MockUpdateRole(ctx, user)
 }
 
-func (m *RepoMock) InsertRestaurant(ctx context.Context, res *model.Restaurant) (*model.Restaurant, error) {
+func (m *RepoMock) InsertRestaurant(ctx context.Context, res *model.Restaurant) (int, error) {
 	return m.MockInsertRestaurant(ctx, res)
 }
 

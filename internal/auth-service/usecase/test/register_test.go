@@ -22,9 +22,9 @@ func Test_UcRegister(t *testing.T) {
 			}
 			return foundUser, nil
 		},
-		MockInsertUser: func(ctx context.Context, user *model.User) (*model.User, error) {
+		MockInsertUser: func(ctx context.Context, user *model.User) (int, error) {
 			createdUser := &model.User{SqlModel: common.SqlModel{ID: 2, CreatedAt: now, UpdatedAt: now}, Name: user.Name, Email: user.Email, Password: user.Password, Role: user.Role}
-			return createdUser, nil
+			return createdUser.ID, nil
 		},
 	}
 	uc := usecase.NewAuthUC(mockRepo, tokenprovider, 24*10)
@@ -38,24 +38,8 @@ func Test_UcRegister(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		if got.ID != 2 {
-			t.Errorf("authUC.Register() should return model.User.ID = 2, but got = %d", got.ID)
-		}
-
-		if got.Name != userInput.Name {
-			t.Errorf("authUC.Register() should return model.User.Name = %s, but got = %s", userInput.Name, got.Name)
-		}
-
-		if got.Email != userInput.Email {
-			t.Errorf("authUC.Register() should return model.User.Email = %s, but got = %s", userInput.Email, got.Email)
-		}
-
-		if got.Password == userInput.Password || got.Password != "" {
-			t.Errorf("authUC.Register() should return model.User.Password = '', but got = %s", got.Password)
-		}
-
-		if got.Role != model.RoleCustomer {
-			t.Errorf("authUC.Register() should return model.Role = 'customer', but got = %v", got.Role)
+		if got != 2 {
+			t.Errorf("authUC.Register() should return model.User.ID = 2, but got = %d", got)
 		}
 	})
 
@@ -64,7 +48,7 @@ func Test_UcRegister(t *testing.T) {
 
 		got, err := uc.Register(context.Background(), userInput)
 
-		if got != nil && err == nil {
+		if got != 0 && err == nil {
 			t.Errorf("authUC.Register() should return error existed email")
 		}
 	})

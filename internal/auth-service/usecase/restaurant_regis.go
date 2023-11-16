@@ -6,24 +6,24 @@ import (
 	"umai-auth-service/model"
 )
 
-func (u *authUC) RestaurantRegis(ctx context.Context, res *model.Restaurant) (*model.Restaurant, error) {
+func (u *authUC) RestaurantRegis(ctx context.Context, res *model.Restaurant) (int, error) {
 	user, err := u.authRepo.FindUserByID(ctx, res.UserID)
 	if user == nil && err != nil {
-		return nil, common.NotExistAccount
+		return 0, common.NotExistAccount
 	}
 
 	if user.Role == model.RoleCustomer {
 		if err := u.authRepo.UpdateRole(ctx, user); err != nil {
-			return nil, err
+			return 0, err
 		}
 	} else {
-		return nil, common.BadRequest
+		return 0, common.BadRequest
 	}
 
-	restaurant, err := u.authRepo.InsertRestaurant(ctx, res)
+	restaurantId, err := u.authRepo.InsertRestaurant(ctx, res)
 
 	if err != nil {
-		return nil, err
+		return 0, err
 	}
-	return restaurant, nil
+	return restaurantId, nil
 }

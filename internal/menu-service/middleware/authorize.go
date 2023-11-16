@@ -48,8 +48,12 @@ func Auth(tokenprovider jwt.TokenProvider, grpcCServ *grpc.GrpcClient) gin.Handl
 
 		fmt.Println(claims.ID, uid)
 
-		ctx.Set(common.CuserId, uid)
-		ctx.Set(common.CuserRole, urole)
-		ctx.Next()
+		if claims.ID == uid && urole == "restaurant" {
+			ctx.Set(common.CuserId, uid)
+			ctx.Set(common.CuserRole, urole)
+			ctx.Next()
+		} else {
+			ctx.Abort()
+		}
 	}
 }

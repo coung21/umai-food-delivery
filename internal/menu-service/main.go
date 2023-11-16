@@ -2,8 +2,12 @@ package main
 
 import (
 	"context"
+	jwt "menu-service/component"
 	"menu-service/middleware"
+	"menu-service/repository"
 	"menu-service/transport/grpc"
+	"menu-service/transport/rest"
+	"menu-service/usecase"
 	"os"
 
 	"github.com/gin-gonic/gin"
@@ -48,12 +52,12 @@ func main() {
 		s.grpcClient = *grpcClient
 	}()
 
-	// coll := client.Database(os.Getenv("DB_NAME")).Collection("menus")
-	// tokenPro := jwt.NewJWTProvider(os.Getenv("SECRET_KEY"))
-	// menuRepo := repository.NewMenuRepo(coll)
-	// authUc := usecase.NewAuthUC(authRepo, tokenPro, 24*10)
-	// authHdl := rest.NewAuthHandler(authUc, authRepo, tokenPro)
+	coll := client.Database(os.Getenv("DB_NAME")).Collection("menus")
+	tokenPro := jwt.NewJWTProvider(os.Getenv("SECRET_KEY"))
+	menuRepo := repository.NewMenuRepo(coll)
+	menuUc := usecase.NewMenuUC(menuRepo)
+	menuHdl := rest.NewMenuHandler(menuUc, &s.grpcClient, tokenPro)
 
-	// rest.AuthRoutes(r, authHdl)
+	rest.MenuItemRoutes(r, menuHdl)
 	r.Run(":3002")
 }

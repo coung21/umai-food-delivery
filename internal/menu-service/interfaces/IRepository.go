@@ -6,5 +6,5 @@ import (
 )
 
 type Repository interface {
-	InsertMenuItem(ctx context.Context, mitem *model.MenuItem) (*model.MenuItem, error)
+	InsertMenuItem(ctx context.Context, mitem *model.MenuItem) (interface{}, error)
 }

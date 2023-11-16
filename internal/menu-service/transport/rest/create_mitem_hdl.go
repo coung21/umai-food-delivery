@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"gopkg.in/go-playground/validator.v9"
 )
 
 func (h *menuHandler) CreateMenuItemHdl() gin.HandlerFunc {
@@ -16,6 +17,9 @@ func (h *menuHandler) CreateMenuItemHdl() gin.HandlerFunc {
 			ctx.JSON(http.StatusBadRequest, common.NewRestErr(http.StatusBadRequest, err.Error(), err))
 			return
 		}
+
+		validate := validator.New()
+		validate.Struct(mitem)
 		//call biz
 		newMItem, err := h.menuUC.CreateMenuItem(ctx, &mitem)
 		if err != nil {

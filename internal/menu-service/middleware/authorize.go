@@ -53,7 +53,9 @@ func Auth(tokenprovider jwt.TokenProvider, grpcCServ *grpc.GrpcClient) gin.Handl
 			ctx.Set(common.CuserRole, urole)
 			ctx.Next()
 		} else {
+			ctx.JSON(http.StatusForbidden, common.NewRestErr(http.StatusForbidden, common.Forbidden.Error(), err))
 			ctx.Abort()
+			return
 		}
 	}
 }

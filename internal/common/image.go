@@ -9,11 +9,11 @@ import (
 
 type Image struct {
 	// Id     int    `json:"id" gorm:"column:id;"`
-	Url       string `json:"url" gorm:"column:url;"`
-	Width     int    `json:"width" gorm:"column:width;"`
-	Height    int    `json:"height" gorm:"column:height;"`
-	Ext       string `json:"ext" gorm:"column:ext"`
-	CloudName string `json:"cloud_name" gorm:"column:cloud_name"`
+	Url       string `json:"url" gorm:"column:url;" bson:"url"`
+	Width     int    `json:"width" gorm:"column:width;" bson:"width"`
+	Height    int    `json:"height" gorm:"column:height;" bson:"height"`
+	Ext       string `json:"ext" gorm:"column:ext" bson:"ext"`
+	CloudName string `json:"cloud_name" gorm:"column:cloud_name" bson:"cloud_name"`
 }
 
 func (Image) TableName() string { return "images" }

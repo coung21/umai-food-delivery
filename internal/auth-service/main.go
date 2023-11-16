@@ -5,6 +5,7 @@ import (
 	jwt "umai-auth-service/component"
 	"umai-auth-service/db"
 	"umai-auth-service/repository"
+	"umai-auth-service/transport/grpc"
 	"umai-auth-service/transport/rest"
 	"umai-auth-service/usecase"
 
@@ -31,6 +32,10 @@ func (s *Server) Init(r *gin.Engine) {
 	authRepo := repository.NewAuthRepo(db)
 	authUc := usecase.NewAuthUC(authRepo, tokenPro, 24*10)
 	authHdl := rest.NewAuthHandler(authUc, authRepo, tokenPro)
+
+	go func() {
+		grpc.RunGrpcServer(authRepo)
+	}()
 
 	rest.AuthRoutes(r, authHdl)
 }

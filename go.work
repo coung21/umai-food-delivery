@@ -4,4 +4,5 @@ use (
 	./internal/auth-service
 	./internal/common
 	./internal/upload-service
+	./internal/menu-service
 )

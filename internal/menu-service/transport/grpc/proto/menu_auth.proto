@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package menu_auth;
+
+option go_package = "./grpcPb";
+
+service MenuAuthService {
+    rpc GetIdentity(IdentityReq) returns (IdentityRes) {}
+}
+
+message IdentityReq {
+    int32 UserID = 1;
+}
+
+message IdentityRes {
+    int32 UserID = 1;
+    string Role = 2;
+}

@@ -15,7 +15,7 @@ type MenuItem struct {
 	Description  string             `json:"description" bson:"description"`
 	Image        *common.Image      `json:"image" bson:"image" validate:"required"`
 	Price        float32            `json:"price" bson:"price" validate:"required"`
-	Addon        *AddOn             `json:"add_on" bson:"add_on,omitempty"`
+	Addon        *[]AddOn           `json:"add_on" bson:"add_on,omitempty"`
 	UpdatedAt    time.Time          `json:"updated_at,omitempty" bson:"updated_at"`
 	CreatedAt    time.Time          `json:"created_at,omitempty" bson:"created_at"`
 }

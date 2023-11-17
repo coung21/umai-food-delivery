@@ -28,6 +28,7 @@ func Auth(tokenprovider jwt.TokenProvider, grpcCServ *grpc.GrpcClient) gin.Handl
 		id, err := strconv.Atoi(ctx.Param("id"))
 		if err != nil {
 			ctx.JSON(http.StatusBadRequest, common.NewRestErr(http.StatusBadRequest, err.Error(), err))
+			ctx.Abort()
 			return
 		}
 		token, err := extractTokenFromHeaderString(ctx.GetHeader("Authorization"))

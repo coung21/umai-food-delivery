@@ -6,7 +6,7 @@ import (
 	"menu-service/transport/grpc/grpcPb"
 )
 
-func GetIdentityHdl(c grpcPb.MenuAuthServiceClient, uid int) (int, string) {
+func GetIdentityHdl(c grpcPb.MenuAuthServiceClient, uid int) (int, string, int) {
 	resp, err := c.GetIdentity(context.Background(), &grpcPb.IdentityReq{
 		UserID: int32(uid),
 	})
@@ -14,5 +14,5 @@ func GetIdentityHdl(c grpcPb.MenuAuthServiceClient, uid int) (int, string) {
 		log.Fatalf("error while call %v", err)
 	}
 
-	return int(resp.GetUserID()), resp.GetRole()
+	return int(resp.GetUserID()), resp.GetRole(), int(resp.GetRestaurantID())
 }

@@ -9,14 +9,15 @@ import (
 )
 
 type MenuItem struct {
-	ID          primitive.ObjectID `json:"id" bson:"_id,omitempty"`
-	Name        string             `json:"name" bson:"name" validate:"required"`
-	Description string             `json:"description" bson:"description"`
-	Image       *common.Image      `json:"image" bson:"image" validate:"required"`
-	Price       float32            `json:"price" bson:"price" validate:"required"`
-	Addon       *AddOn             `json:"add_on" bson:"add_on,omitempty"`
-	UpdatedAt   time.Time          `json:"updated_at,omitempty" bson:"updated_at"`
-	CreatedAt   time.Time          `json:"created_at,omitempty" bson:"created_at"`
+	ID           primitive.ObjectID `json:"id" bson:"_id,omitempty"`
+	RestaurantID int                `json:"restaurant_id" bson:"restaurant_id" validate:"required"`
+	Name         string             `json:"name" bson:"name" validate:"required"`
+	Description  string             `json:"description" bson:"description"`
+	Image        *common.Image      `json:"image" bson:"image" validate:"required"`
+	Price        float32            `json:"price" bson:"price" validate:"required"`
+	Addon        *AddOn             `json:"add_on" bson:"add_on,omitempty"`
+	UpdatedAt    time.Time          `json:"updated_at,omitempty" bson:"updated_at"`
+	CreatedAt    time.Time          `json:"created_at,omitempty" bson:"created_at"`
 }
 
 // Implement bson.Marshaler, and MarshalBSON() function will be called when you save values of *MenuItem type.

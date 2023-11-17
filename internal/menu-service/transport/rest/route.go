@@ -9,8 +9,8 @@ import (
 func MenuItemRoutes(r *gin.Engine, handlers *menuHandler) {
 
 	authMdw := middleware.Auth(handlers.tokenProvider, handlers.grpcC)
-	v1 := r.Group("/v1/restaurant/menu")
+	v1 := r.Group("/v1/restaurant")
 	{
-		v1.POST("/", authMdw, handlers.CreateMenuItemHdl())
+		v1.POST("/:id/menu", authMdw, handlers.CreateMenuItemHdl())
 	}
 }

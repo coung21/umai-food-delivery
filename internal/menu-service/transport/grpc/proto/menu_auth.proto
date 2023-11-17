@@ -15,4 +15,5 @@ message IdentityReq {
 message IdentityRes {
     int32 UserID = 1;
     string Role = 2;
+    int32 RestaurantID = 3;
 }

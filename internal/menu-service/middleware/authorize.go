@@ -6,6 +6,7 @@ import (
 	jwt "menu-service/component"
 	"menu-service/transport/grpc"
 	"net/http"
+	"strconv"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -24,6 +25,11 @@ func extractTokenFromHeaderString(s string) (string, error) {
 
 func Auth(tokenprovider jwt.TokenProvider, grpcCServ *grpc.GrpcClient) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
+		id, err := strconv.Atoi(ctx.Param("id"))
+		if err != nil {
+			ctx.JSON(http.StatusBadRequest, common.NewRestErr(http.StatusBadRequest, err.Error(), err))
+			return
+		}
 		token, err := extractTokenFromHeaderString(ctx.GetHeader("Authorization"))
 		if err != nil {
 			ctx.JSON(http.StatusUnauthorized, common.NewRestErr(http.StatusUnauthorized, err.Error(), err))
@@ -39,18 +45,19 @@ func Auth(tokenprovider jwt.TokenProvider, grpcCServ *grpc.GrpcClient) gin.Handl
 			return
 		}
 
-		uid, urole := grpc.GetIdentityHdl(grpcCServ.Client, claims.ID)
+		uid, urole, rid := grpc.GetIdentityHdl(grpcCServ.Client, claims.ID)
 		if err != nil {
 			ctx.JSON(http.StatusUnauthorized, common.NewRestErr(http.StatusUnauthorized, common.InvalidJWTToken.Error(), err))
 			ctx.Abort()
 			return
 		}
 
-		fmt.Println(claims.ID, uid)
+		fmt.Println(claims.ID, uid, rid)
 
-		if claims.ID == uid && urole == "restaurant" {
+		if claims.ID == uid && claims.Role == common.RoleRestaurant && urole == common.RoleRestaurant && rid == id {
 			ctx.Set(common.CuserId, uid)
 			ctx.Set(common.CuserRole, urole)
+			ctx.Set(common.CResId, rid)
 			ctx.Next()
 		} else {
 			ctx.JSON(http.StatusForbidden, common.NewRestErr(http.StatusForbidden, common.Forbidden.Error(), err))

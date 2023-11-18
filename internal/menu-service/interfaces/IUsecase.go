@@ -8,4 +8,5 @@ import (
 type Usecase interface {
 	CreateMenuItem(ctx context.Context, mitem *model.MenuItem) (interface{}, error)
 	ListMenuItemByResID(ctx context.Context, rid int) (*[]model.MenuItem, error)
+	UpdateMenuItem(ctx context.Context, rid int, mid string, upd *model.UpdateMenuItem) (*model.MenuItem, error)
 }

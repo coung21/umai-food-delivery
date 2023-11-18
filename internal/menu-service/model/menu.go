@@ -36,3 +36,22 @@ type AddOn struct {
 	Image *common.Image `json:"image" bson:"image" validate:"required"`
 	Price float32       `json:"price" bson:"price" validate:"required"`
 }
+
+type UpdateMenuItem struct {
+	Name        string        `json:"name" bson:"name,omitempty"`
+	Description *string       `json:"description" bson:"description,omitempty"`
+	Image       *common.Image `json:"image" bson:"image,omitempty"`
+	Price       *float32      `json:"price" bson:"price,omitempty"`
+	Addon       *[]AddOn      `json:"add_on" bson:"add_on,omitempty"`
+	UpdatedAt   time.Time     `json:"updated_at,omitempty" bson:"updated_at"`
+}
+
+func (m *UpdateMenuItem) MarshalBSON() ([]byte, error) {
+	// if m.CreatedAt.IsZero() {
+	// 	m.CreatedAt = time.Now()
+	// }
+	m.UpdatedAt = time.Now()
+
+	type my UpdateMenuItem
+	return bson.Marshal((*my)(m))
+}

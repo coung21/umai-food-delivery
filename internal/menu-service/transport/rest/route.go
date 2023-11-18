@@ -13,5 +13,6 @@ func MenuItemRoutes(r *gin.Engine, handlers *menuHandler) {
 	{
 		v1.POST("/:id/menu", authMdw, handlers.CreateMenuItemHdl())
 		v1.GET("/:id/menu", handlers.ListMenuItemByIDHdl())
+		v1.PATCH("/:id/menu/:menu_id", authMdw, handlers.UpdateMenuItem())
 	}
 }

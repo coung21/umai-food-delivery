@@ -29,6 +29,9 @@ func (h *menuHandler) UpdateMenuItem() gin.HandlerFunc {
 			if err == common.BadQueryParams {
 				ctx.JSON(http.StatusBadRequest, common.NewRestErr(http.StatusBadRequest, err.Error(), err))
 				return
+			} else if err == common.NotFound {
+				ctx.JSON(http.StatusNotFound, common.NewRestErr(http.StatusNotFound, err.Error(), err))
+				return
 			} else {
 				ctx.JSON(http.StatusInternalServerError, common.NewRestErr(http.StatusInternalServerError, err.Error(), err))
 				return

@@ -15,5 +15,6 @@ func MenuItemRoutes(r *gin.Engine, handlers *menuHandler) {
 		v1.GET("/:id/menu", handlers.ListMenuItemByIDHdl())
 		v1.PATCH("/:id/menu/:menu_id", authMdw, handlers.UpdateMenuItem())
 		v1.DELETE("/:id/menu/:menu_id", authMdw, handlers.DeleteMenuItemHdl())
+		v1.GET("/menu/:menu_id", handlers.GetMenuItemHdl())
 	}
 }

@@ -7,6 +7,7 @@ import (
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
@@ -20,6 +21,9 @@ func (r *menuRepo) UpdateMenuItem(ctx context.Context, rid int, mid string, upd 
 	options := options.FindOneAndUpdate().SetReturnDocument(options.After)
 	err = r.dbc.FindOneAndUpdate(ctx, filter, bson.M{"$set": upd}, options).Decode(&newData)
 	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			return nil, common.NotFound
+		}
 		return nil, err
 	}
 

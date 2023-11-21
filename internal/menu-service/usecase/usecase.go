@@ -8,8 +8,9 @@ import (
 type menuUC struct {
 	menuRepo menu.Repository
 	// tokenprovider jwt.TokenProvider
+	cacheRepo menu.CacheRepository
 }
 
-func NewMenuUC(menuRepo menu.Repository) *menuUC {
-	return &menuUC{menuRepo: menuRepo}
+func NewMenuUC(menuRepo menu.Repository, cacheRepo menu.CacheRepository) *menuUC {
+	return &menuUC{menuRepo: menuRepo, cacheRepo: cacheRepo}
 }

@@ -2,9 +2,11 @@ package main
 
 import (
 	"context"
+	"fmt"
 	jwt "menu-service/component"
 	"menu-service/middleware"
-	"menu-service/repository"
+	mongo_repo "menu-service/repository/mongo_repos"
+	redis_repo "menu-service/repository/redis_repos"
 	"menu-service/transport/grpc"
 	"menu-service/transport/rest"
 	"menu-service/usecase"
@@ -54,8 +56,9 @@ func main() {
 
 	coll := client.Database(os.Getenv("DB_NAME")).Collection("menus")
 	tokenPro := jwt.NewJWTProvider(os.Getenv("SECRET_KEY"))
-	menuRepo := repository.NewMenuRepo(coll)
-	menuUc := usecase.NewMenuUC(menuRepo)
+	menuRepo := mongo_repo.NewMenuRepo(coll)
+	cacheRepo := redis_repo.NewCacheRepo(fmt.Sprintf("%s:%s", os.Getenv("REDIS_HOST"), os.Getenv("REDIS_PORT")), os.Getenv("REDIS_PASS"), 0)
+	menuUc := usecase.NewMenuUC(menuRepo, cacheRepo)
 	menuHdl := rest.NewMenuHandler(menuUc, &s.grpcClient, tokenPro)
 
 	rest.MenuItemRoutes(r, menuHdl)

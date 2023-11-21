@@ -26,6 +26,6 @@ func (h *menuHandler) GetMenuItemHdl() gin.HandlerFunc {
 			}
 		}
 
-		ctx.JSON(http.StatusOK, common.NewHttpSuccessResponse(http.StatusOK, "Delete menu item successfully.", data))
+		ctx.JSON(http.StatusOK, common.NewHttpSuccessResponse(http.StatusOK, "Get menu item successfully.", data))
 	}
 }

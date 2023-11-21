@@ -10,5 +10,10 @@ func (u *menuUC) UpdateMenuItem(ctx context.Context, rid int, mid string, upd *m
 	if err != nil {
 		return nil, err
 	}
+
+	err = u.cacheRepo.Del(ctx, mid)
+	if err != nil {
+		return nil, err
+	}
 	return mitem, nil
 }

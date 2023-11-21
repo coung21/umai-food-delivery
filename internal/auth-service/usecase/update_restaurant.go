@@ -3,6 +3,7 @@ package usecase
 import (
 	"common"
 	"context"
+	"log"
 	"umai-auth-service/model"
 )
 
@@ -20,6 +21,11 @@ func (u *authUC) UpdateRestaurant(ctx context.Context, id int, udp *model.Restau
 	newData, err := u.authRepo.UpdateRestaurant(ctx, olddata, udp)
 	if err != nil {
 		return nil, common.InternalServerError
+	}
+
+	err = u.cacheRepo.Del(ctx, id)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	return newData, nil

@@ -36,7 +36,9 @@ func Test_GetRestaurant(t *testing.T) {
 		},
 	}
 
-	uc := usecase.NewAuthUC(mockRepo, tokenprovider, 24*10)
+	cMockRepo := &mocks.CacheRepoMock{}
+
+	uc := usecase.NewAuthUC(mockRepo, cMockRepo, tokenprovider, 24*10)
 
 	t.Run("Valid get user data", func(t *testing.T) {
 		got, err := uc.GetRestaurant(context.Background(), 1)

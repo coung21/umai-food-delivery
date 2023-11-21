@@ -49,7 +49,9 @@ func Test_UpdateUser(t *testing.T) {
 		},
 	}
 
-	uc := usecase.NewAuthUC(mockRepo, tokenprovider, 24*10)
+	cMockRepo := &mocks.CacheRepoMock{}
+
+	uc := usecase.NewAuthUC(mockRepo, cMockRepo, tokenprovider, 24*10)
 
 	t.Run("Valid update profile", func(t *testing.T) {
 		newName := "Joe Dijk"

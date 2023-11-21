@@ -2,6 +2,7 @@ package auth
 
 import (
 	"context"
+	"time"
 	"umai-auth-service/model"
 )
 
@@ -15,4 +16,10 @@ type Repository interface {
 	FindRestaurantByID(ctx context.Context, id int) (*model.Restaurant, error)
 	UpdateRestaurant(ctx context.Context, oldres *model.Restaurant, upd *model.RestaurantUpdate) (*model.Restaurant, error)
 	FindRestaurantByUserID(ctx context.Context, uid int) (*model.Restaurant, error)
+}
+
+type CacheRepository interface {
+	Set(ctx context.Context, id int, res *model.Restaurant, ttl time.Duration) error
+	Get(ctx context.Context, id int) (*model.Restaurant, error)
+	Del(ctx context.Context, id int) error
 }

@@ -1,10 +1,12 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	jwt "umai-auth-service/component"
 	"umai-auth-service/db"
-	"umai-auth-service/repository"
+	mysql_repo "umai-auth-service/repository/mysql_repos"
+	cache_repo "umai-auth-service/repository/redis_repos"
 	"umai-auth-service/transport/grpc"
 	"umai-auth-service/transport/rest"
 	"umai-auth-service/usecase"
@@ -22,15 +24,16 @@ func (s *Server) Init(r *gin.Engine) {
 	if err := godotenv.Load(); err != nil {
 		panic(err)
 	}
-	db, err := db.MysqlConn()
-
+	mdb, err := db.MysqlConn()
+	cdb := db.RedisConn(fmt.Sprintf("%s:%s", os.Getenv("REDIS_HOST"), os.Getenv("REDIS_PORT")), os.Getenv("REDIS_PASS"), 0)
 	if err != nil {
 		panic(err)
 	}
 
 	tokenPro := jwt.NewJWTProvider(os.Getenv("SECRET_KEY"))
-	authRepo := repository.NewAuthRepo(db)
-	authUc := usecase.NewAuthUC(authRepo, tokenPro, 24*10)
+	authRepo := mysql_repo.NewAuthRepo(mdb)
+	cacheRepo := cache_repo.NewCacheAuthRepo(cdb)
+	authUc := usecase.NewAuthUC(authRepo, cacheRepo, tokenPro, 24*10)
 	authHdl := rest.NewAuthHandler(authUc, authRepo, tokenPro)
 
 	go func() {

@@ -7,10 +7,11 @@ import (
 
 type authUC struct {
 	authRepo      auth.Repository
+	cacheRepo     auth.CacheRepository
 	tokenProvider jwt.TokenProvider
 	expToken      int
 }
 
-func NewAuthUC(repo auth.Repository, tokenprovider jwt.TokenProvider, exp int) *authUC {
-	return &authUC{authRepo: repo, tokenProvider: tokenprovider, expToken: exp}
+func NewAuthUC(repo auth.Repository, cacheRepo auth.CacheRepository, tokenprovider jwt.TokenProvider, exp int) *authUC {
+	return &authUC{authRepo: repo, cacheRepo: cacheRepo, tokenProvider: tokenprovider, expToken: exp}
 }

@@ -50,7 +50,9 @@ func Test_RetaurantRes(t *testing.T) {
 		},
 	}
 
-	uc := usecase.NewAuthUC(mockRepo, tokenprovider, 24*10)
+	cMockRepo := &mocks.CacheRepoMock{}
+
+	uc := usecase.NewAuthUC(mockRepo, cMockRepo, tokenprovider, 24*10)
 
 	t.Run("Valid restaurant registration", func(t *testing.T) {
 		resInput := &model.Restaurant{RestaurantName: "JChick", UserID: 1}

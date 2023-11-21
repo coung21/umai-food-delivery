@@ -56,7 +56,9 @@ func Test_UpdateRestaurant(t *testing.T) {
 		},
 	}
 
-	uc := usecase.NewAuthUC(mockRepo, tokenprovider, 24*10)
+	cMockRepo := &mocks.CacheRepoMock{}
+
+	uc := usecase.NewAuthUC(mockRepo, cMockRepo, tokenprovider, 24*10)
 	ctx := context.WithValue(context.Background(), common.CuserId, 1)
 
 	t.Run("Valid update", func(t *testing.T) {

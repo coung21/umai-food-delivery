@@ -56,7 +56,11 @@ func Test_UpdateRestaurant(t *testing.T) {
 		},
 	}
 
-	cMockRepo := &mocks.CacheRepoMock{}
+	cMockRepo := &mocks.CacheRepoMock{
+		MockDel: func(ctx context.Context, id int) error {
+			return nil
+		},
+	}
 
 	uc := usecase.NewAuthUC(mockRepo, cMockRepo, tokenprovider, 24*10)
 	ctx := context.WithValue(context.Background(), common.CuserId, 1)

@@ -36,7 +36,14 @@ func Test_GetRestaurant(t *testing.T) {
 		},
 	}
 
-	cMockRepo := &mocks.CacheRepoMock{}
+	cMockRepo := &mocks.CacheRepoMock{
+		MockGet: func(ctx context.Context, id int) (*model.Restaurant, error) {
+			return nil, common.ErrMissCache
+		},
+		MockSet: func(ctx context.Context, id int, res *model.Restaurant, ttl time.Duration) error {
+			return nil
+		},
+	}
 
 	uc := usecase.NewAuthUC(mockRepo, cMockRepo, tokenprovider, 24*10)
 

@@ -2,7 +2,6 @@ package mocks
 
 import (
 	"context"
-	"time"
 	auth "umai-auth-service/interfaces"
 	"umai-auth-service/model"
 )
@@ -49,22 +48,4 @@ func (m *RepoMock) FindRestaurantByID(ctx context.Context, id int) (*model.Resta
 
 func (m *RepoMock) UpdateRestaurant(ctx context.Context, oldres *model.Restaurant, upd *model.RestaurantUpdate) (*model.Restaurant, error) {
 	return m.MockUpdateRestaurant(ctx, oldres, upd)
-}
-
-type CacheRepoMock struct {
-	MockSet func(ctx context.Context, id int, res *model.Restaurant, ttl time.Duration) error
-	MockGet func(ctx context.Context, id int) (*model.Restaurant, error)
-	MockDel func(ctx context.Context, id int) error
-}
-
-func (m *CacheRepoMock) Set(ctx context.Context, id int, res *model.Restaurant, ttl time.Duration) error {
-	return m.MockSet(ctx, id, res, time.Hour)
-}
-
-func (m *CacheRepoMock) Get(ctx context.Context, id int) (*model.Restaurant, error) {
-	return m.MockGet(ctx, id)
-}
-
-func (m *CacheRepoMock) Del(ctx context.Context, id int) error {
-	return m.MockDel(ctx, id)
 }

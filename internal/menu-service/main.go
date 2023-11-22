@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	jwt "menu-service/component"
+	"menu-service/db"
 	"menu-service/middleware"
 	mongo_repo "menu-service/repository/mongo_repos"
 	redis_repo "menu-service/repository/redis_repos"
@@ -14,8 +15,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 type server struct {
@@ -38,7 +37,8 @@ func main() {
 		panic(err)
 	}
 
-	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(os.Getenv("MONGODB_URI")))
+	// client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(os.Getenv("MONGODB_URI")))
+	client, err := db.MongoConn()
 
 	if err != nil {
 		panic(err)
@@ -55,6 +55,8 @@ func main() {
 	}()
 
 	coll := client.Database(os.Getenv("DB_NAME")).Collection("menus")
+	//create index
+	db.CreateIndexes(coll)
 	tokenPro := jwt.NewJWTProvider(os.Getenv("SECRET_KEY"))
 	menuRepo := mongo_repo.NewMenuRepo(coll)
 	cacheRepo := redis_repo.NewCacheRepo(fmt.Sprintf("%s:%s", os.Getenv("REDIS_HOST"), os.Getenv("REDIS_PORT")), os.Getenv("REDIS_PASS"), 0)

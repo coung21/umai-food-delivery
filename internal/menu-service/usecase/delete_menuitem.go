@@ -3,6 +3,7 @@ package usecase
 import (
 	"common"
 	"context"
+	"log"
 )
 
 func (u *menuUC) DeleteMenuItem(ctx context.Context, mid string, rid int) (int, error) {
@@ -17,6 +18,10 @@ func (u *menuUC) DeleteMenuItem(ctx context.Context, mid string, rid int) (int, 
 	delCount, err := u.menuRepo.DeleteMenuItem(ctx, mid)
 	if err != nil {
 		return delCount, err
+	}
+
+	if err := u.cacheRepo.Del(ctx, mid); err != nil {
+		log.Printf("Del Cache Err : %v", err)
 	}
 	return delCount, nil
 }

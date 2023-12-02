@@ -5,4 +5,5 @@ use (
 	./internal/common
 	./internal/upload-service
 	./internal/menu-service
+	./internal/order-service
 )

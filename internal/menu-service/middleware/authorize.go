@@ -46,14 +46,14 @@ func Auth(tokenprovider jwt.TokenProvider, grpcCServ *grpc.GrpcClient) gin.Handl
 			return
 		}
 
-		uid, urole, rid := grpc.GetIdentityHdl(grpcCServ.Client, claims.ID)
+		uid, urole, rid := grpc.GetIdentityHdl(grpcCServ.AuthC, claims.ID)
 		if err != nil {
 			ctx.JSON(http.StatusUnauthorized, common.NewRestErr(http.StatusUnauthorized, common.InvalidJWTToken.Error(), err))
 			ctx.Abort()
 			return
 		}
 
-		fmt.Println(claims.ID, uid, rid)
+		fmt.Println(urole)
 
 		if claims.ID == uid && claims.Role == common.RoleRestaurant && urole == common.RoleRestaurant && rid == id {
 			ctx.Set(common.CuserId, uid)

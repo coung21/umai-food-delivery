@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v4.24.4
-// source: transport/grpc/proto/menu_auth.proto
+// source: transport/grpc/proto/umai.proto
 
 package grpcPb
 
@@ -35,7 +35,7 @@ func NewMenuAuthServiceClient(cc grpc.ClientConnInterface) MenuAuthServiceClient
 
 func (c *menuAuthServiceClient) GetIdentity(ctx context.Context, in *IdentityReq, opts ...grpc.CallOption) (*IdentityRes, error) {
 	out := new(IdentityRes)
-	err := c.cc.Invoke(ctx, "/menu_auth.MenuAuthService/GetIdentity", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/grpc.MenuAuthService/GetIdentity", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +80,7 @@ func _MenuAuthService_GetIdentity_Handler(srv interface{}, ctx context.Context, 
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/menu_auth.MenuAuthService/GetIdentity",
+		FullMethod: "/grpc.MenuAuthService/GetIdentity",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MenuAuthServiceServer).GetIdentity(ctx, req.(*IdentityReq))
@@ -92,7 +92,7 @@ func _MenuAuthService_GetIdentity_Handler(srv interface{}, ctx context.Context, 
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var MenuAuthService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "menu_auth.MenuAuthService",
+	ServiceName: "grpc.MenuAuthService",
 	HandlerType: (*MenuAuthServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -101,5 +101,5 @@ var MenuAuthService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "transport/grpc/proto/menu_auth.proto",
+	Metadata: "transport/grpc/proto/umai.proto",
 }

@@ -63,6 +63,10 @@ func main() {
 	menuUc := usecase.NewMenuUC(menuRepo, cacheRepo)
 	menuHdl := rest.NewMenuHandler(menuUc, &s.grpcClient, tokenPro)
 
+	go func() {
+		grpc.RunGrpcServer(menuRepo)
+	}()
+
 	rest.MenuItemRoutes(r, menuHdl)
 	r.Run(":3002")
 }

@@ -28,7 +28,7 @@ func RunGrpcServer(authRepo auth.Repository) {
 	s := grpc.NewServer()
 
 	grpcPb.RegisterMenuAuthServiceServer(s, &GrpcServer{authRepo: authRepo})
-	log.Println("MenuAuth Grpc Server is running on", lis.Addr().String())
+	// log.Println("MenuAuth Grpc Server is running on", lis.Addr().String())
 
 	if err := s.Serve(lis); err != nil {
 		log.Printf("Error while serve grpc server %v", err)

@@ -15,7 +15,6 @@ type MenuItem struct {
 	Description  string             `json:"description" bson:"description"`
 	Image        *common.Image      `json:"image" bson:"image" validate:"required"`
 	Price        float32            `json:"price" bson:"price" validate:"required"`
-	Addon        *[]AddOn           `json:"add_on" bson:"add_on,omitempty"`
 	UpdatedAt    time.Time          `json:"updated_at,omitempty" bson:"updated_at"`
 	CreatedAt    time.Time          `json:"created_at,omitempty" bson:"created_at"`
 }
@@ -31,18 +30,11 @@ func (m *MenuItem) MarshalBSON() ([]byte, error) {
 	return bson.Marshal((*my)(m))
 }
 
-type AddOn struct {
-	Name  string        `json:"name" bson:"name" validate:"required"`
-	Image *common.Image `json:"image" bson:"image" validate:"required"`
-	Price float32       `json:"price" bson:"price" validate:"required"`
-}
-
 type UpdateMenuItem struct {
 	Name        string        `json:"name" bson:"name,omitempty"`
 	Description *string       `json:"description" bson:"description,omitempty"`
 	Image       *common.Image `json:"image" bson:"image,omitempty"`
 	Price       *float32      `json:"price" bson:"price,omitempty"`
-	Addon       *[]AddOn      `json:"add_on" bson:"add_on,omitempty"`
 	UpdatedAt   time.Time     `json:"updated_at,omitempty" bson:"updated_at"`
 }
 

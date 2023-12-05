@@ -40,9 +40,9 @@ func main() {
 
 	r.GET("/lol", func(ctx *gin.Context) {
 
-		re, err := grpc.GetMenuItemHdl(server.grpcClient.MenuC, "6558f5358b01596f94ff97f9")
+		re, err := grpc.GetMenuItemHdl(server.grpcClient.MenuC, "6558f5358b01596f94ff97f1")
 		if err != nil {
-			fmt.Println(err)
+			fmt.Println(err.Error())
 
 		}
 

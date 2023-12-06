@@ -5,18 +5,27 @@ package grpc;
 
 option go_package = "./grpcPb";
 
-service MenuAuthService {
-  rpc GetIdentity(IdentityReq) returns (IdentityRes) {}
+service IdentityService {
+  rpc GetResIdentity(IdentityResReq) returns (IdentityResResp) {}
+  rpc GetUserIdentity(IdentityReq) returns (IdentityResp) {}
+}
+
+message IdentityResReq {
+  int32 UserID = 1;
+}
+
+message IdentityResResp {
+  int32 UserID = 1;
+  string Role = 2;
+  int32 RestaurantID = 3;
 }
 
 message IdentityReq {
   int32 UserID = 1;
 }
 
-message IdentityRes {
+message IdentityResp {
   int32 UserID = 1;
-  string Role = 2;
-  int32 RestaurantID = 3;
 }
 
 service MenuItemService {

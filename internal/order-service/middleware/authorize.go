@@ -2,11 +2,9 @@ package middleware
 
 import (
 	"common"
-	"fmt"
-	jwt "menu-service/component"
-	"menu-service/transport/grpc"
 	"net/http"
-	"strconv"
+	jwt "order-service/component"
+	"order-service/transport/grpc"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -25,12 +23,12 @@ func extractTokenFromHeaderString(s string) (string, error) {
 
 func Auth(tokenprovider jwt.TokenProvider, grpcCServ *grpc.GrpcClient) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		id, err := strconv.Atoi(ctx.Param("id"))
-		if err != nil {
-			ctx.JSON(http.StatusBadRequest, common.NewRestErr(http.StatusBadRequest, err.Error(), err))
-			ctx.Abort()
-			return
-		}
+		// id, err := strconv.Atoi(ctx.Param("id"))
+		// if err != nil {
+		// 	ctx.JSON(http.StatusBadRequest, common.NewRestErr(http.StatusBadRequest, err.Error(), err))
+		// 	ctx.Abort()
+		// 	return
+		// }
 		token, err := extractTokenFromHeaderString(ctx.GetHeader("Authorization"))
 		if err != nil {
 			ctx.JSON(http.StatusUnauthorized, common.NewRestErr(http.StatusUnauthorized, err.Error(), err))
@@ -46,19 +44,17 @@ func Auth(tokenprovider jwt.TokenProvider, grpcCServ *grpc.GrpcClient) gin.Handl
 			return
 		}
 
-		identity, err := grpc.GetResIdentityHdl(grpcCServ.AuthC, claims.ID)
+		uid, err := grpc.GetUserIdentityHdl(grpcCServ.AuthC, claims.ID)
 		if err != nil {
 			ctx.JSON(http.StatusUnauthorized, common.NewRestErr(http.StatusUnauthorized, common.Unauthorized.Error(), err))
 			ctx.Abort()
 			return
 		}
 
-		fmt.Println(identity["user_id"])
+		// fmt.Println(identity["user_id"])
 
-		if claims.ID == identity["user_id"] && claims.Role == common.RoleRestaurant && identity["role"] == common.RoleRestaurant && identity["restaurant_id"] == id {
-			ctx.Set(common.CuserId, identity["user_id"])
-			ctx.Set(common.CuserRole, identity["role"])
-			ctx.Set(common.CResId, identity["restaurant_id"])
+		if claims.ID == *uid {
+			ctx.Set(common.CuserId, *uid)
 			ctx.Next()
 		} else {
 			ctx.JSON(http.StatusForbidden, common.NewRestErr(http.StatusForbidden, common.Forbidden.Error(), err))

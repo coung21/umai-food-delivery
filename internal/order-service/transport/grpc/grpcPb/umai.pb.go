@@ -22,6 +22,116 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type IdentityResReq struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	UserID int32 `protobuf:"varint,1,opt,name=UserID,proto3" json:"UserID,omitempty"`
+}
+
+func (x *IdentityResReq) Reset() {
+	*x = IdentityResReq{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_transport_grpc_proto_umai_proto_msgTypes[0]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *IdentityResReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*IdentityResReq) ProtoMessage() {}
+
+func (x *IdentityResReq) ProtoReflect() protoreflect.Message {
+	mi := &file_transport_grpc_proto_umai_proto_msgTypes[0]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use IdentityResReq.ProtoReflect.Descriptor instead.
+func (*IdentityResReq) Descriptor() ([]byte, []int) {
+	return file_transport_grpc_proto_umai_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *IdentityResReq) GetUserID() int32 {
+	if x != nil {
+		return x.UserID
+	}
+	return 0
+}
+
+type IdentityResResp struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	UserID       int32  `protobuf:"varint,1,opt,name=UserID,proto3" json:"UserID,omitempty"`
+	Role         string `protobuf:"bytes,2,opt,name=Role,proto3" json:"Role,omitempty"`
+	RestaurantID int32  `protobuf:"varint,3,opt,name=RestaurantID,proto3" json:"RestaurantID,omitempty"`
+}
+
+func (x *IdentityResResp) Reset() {
+	*x = IdentityResResp{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_transport_grpc_proto_umai_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *IdentityResResp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*IdentityResResp) ProtoMessage() {}
+
+func (x *IdentityResResp) ProtoReflect() protoreflect.Message {
+	mi := &file_transport_grpc_proto_umai_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use IdentityResResp.ProtoReflect.Descriptor instead.
+func (*IdentityResResp) Descriptor() ([]byte, []int) {
+	return file_transport_grpc_proto_umai_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *IdentityResResp) GetUserID() int32 {
+	if x != nil {
+		return x.UserID
+	}
+	return 0
+}
+
+func (x *IdentityResResp) GetRole() string {
+	if x != nil {
+		return x.Role
+	}
+	return ""
+}
+
+func (x *IdentityResResp) GetRestaurantID() int32 {
+	if x != nil {
+		return x.RestaurantID
+	}
+	return 0
+}
+
 type IdentityReq struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -33,7 +143,7 @@ type IdentityReq struct {
 func (x *IdentityReq) Reset() {
 	*x = IdentityReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_transport_grpc_proto_umai_proto_msgTypes[0]
+		mi := &file_transport_grpc_proto_umai_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -46,7 +156,7 @@ func (x *IdentityReq) String() string {
 func (*IdentityReq) ProtoMessage() {}
 
 func (x *IdentityReq) ProtoReflect() protoreflect.Message {
-	mi := &file_transport_grpc_proto_umai_proto_msgTypes[0]
+	mi := &file_transport_grpc_proto_umai_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -59,7 +169,7 @@ func (x *IdentityReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use IdentityReq.ProtoReflect.Descriptor instead.
 func (*IdentityReq) Descriptor() ([]byte, []int) {
-	return file_transport_grpc_proto_umai_proto_rawDescGZIP(), []int{0}
+	return file_transport_grpc_proto_umai_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *IdentityReq) GetUserID() int32 {
@@ -69,33 +179,31 @@ func (x *IdentityReq) GetUserID() int32 {
 	return 0
 }
 
-type IdentityRes struct {
+type IdentityResp struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	UserID       int32  `protobuf:"varint,1,opt,name=UserID,proto3" json:"UserID,omitempty"`
-	Role         string `protobuf:"bytes,2,opt,name=Role,proto3" json:"Role,omitempty"`
-	RestaurantID int32  `protobuf:"varint,3,opt,name=RestaurantID,proto3" json:"RestaurantID,omitempty"`
+	UserID int32 `protobuf:"varint,1,opt,name=UserID,proto3" json:"UserID,omitempty"`
 }
 
-func (x *IdentityRes) Reset() {
-	*x = IdentityRes{}
+func (x *IdentityResp) Reset() {
+	*x = IdentityResp{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_transport_grpc_proto_umai_proto_msgTypes[1]
+		mi := &file_transport_grpc_proto_umai_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
 }
 
-func (x *IdentityRes) String() string {
+func (x *IdentityResp) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*IdentityRes) ProtoMessage() {}
+func (*IdentityResp) ProtoMessage() {}
 
-func (x *IdentityRes) ProtoReflect() protoreflect.Message {
-	mi := &file_transport_grpc_proto_umai_proto_msgTypes[1]
+func (x *IdentityResp) ProtoReflect() protoreflect.Message {
+	mi := &file_transport_grpc_proto_umai_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -106,28 +214,14 @@ func (x *IdentityRes) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use IdentityRes.ProtoReflect.Descriptor instead.
-func (*IdentityRes) Descriptor() ([]byte, []int) {
-	return file_transport_grpc_proto_umai_proto_rawDescGZIP(), []int{1}
+// Deprecated: Use IdentityResp.ProtoReflect.Descriptor instead.
+func (*IdentityResp) Descriptor() ([]byte, []int) {
+	return file_transport_grpc_proto_umai_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *IdentityRes) GetUserID() int32 {
+func (x *IdentityResp) GetUserID() int32 {
 	if x != nil {
 		return x.UserID
-	}
-	return 0
-}
-
-func (x *IdentityRes) GetRole() string {
-	if x != nil {
-		return x.Role
-	}
-	return ""
-}
-
-func (x *IdentityRes) GetRestaurantID() int32 {
-	if x != nil {
-		return x.RestaurantID
 	}
 	return 0
 }
@@ -143,7 +237,7 @@ type GetMenuItemReq struct {
 func (x *GetMenuItemReq) Reset() {
 	*x = GetMenuItemReq{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_transport_grpc_proto_umai_proto_msgTypes[2]
+		mi := &file_transport_grpc_proto_umai_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -156,7 +250,7 @@ func (x *GetMenuItemReq) String() string {
 func (*GetMenuItemReq) ProtoMessage() {}
 
 func (x *GetMenuItemReq) ProtoReflect() protoreflect.Message {
-	mi := &file_transport_grpc_proto_umai_proto_msgTypes[2]
+	mi := &file_transport_grpc_proto_umai_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -169,7 +263,7 @@ func (x *GetMenuItemReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetMenuItemReq.ProtoReflect.Descriptor instead.
 func (*GetMenuItemReq) Descriptor() ([]byte, []int) {
-	return file_transport_grpc_proto_umai_proto_rawDescGZIP(), []int{2}
+	return file_transport_grpc_proto_umai_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *GetMenuItemReq) GetId() string {
@@ -190,7 +284,7 @@ type GetMenuItemRes struct {
 func (x *GetMenuItemRes) Reset() {
 	*x = GetMenuItemRes{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_transport_grpc_proto_umai_proto_msgTypes[3]
+		mi := &file_transport_grpc_proto_umai_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -203,7 +297,7 @@ func (x *GetMenuItemRes) String() string {
 func (*GetMenuItemRes) ProtoMessage() {}
 
 func (x *GetMenuItemRes) ProtoReflect() protoreflect.Message {
-	mi := &file_transport_grpc_proto_umai_proto_msgTypes[3]
+	mi := &file_transport_grpc_proto_umai_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -216,7 +310,7 @@ func (x *GetMenuItemRes) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetMenuItemRes.ProtoReflect.Descriptor instead.
 func (*GetMenuItemRes) Descriptor() ([]byte, []int) {
-	return file_transport_grpc_proto_umai_proto_rawDescGZIP(), []int{3}
+	return file_transport_grpc_proto_umai_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *GetMenuItemRes) GetData() string {
@@ -231,31 +325,40 @@ var File_transport_grpc_proto_umai_proto protoreflect.FileDescriptor
 var file_transport_grpc_proto_umai_proto_rawDesc = []byte{
 	0x0a, 0x1f, 0x74, 0x72, 0x61, 0x6e, 0x73, 0x70, 0x6f, 0x72, 0x74, 0x2f, 0x67, 0x72, 0x70, 0x63,
 	0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x75, 0x6d, 0x61, 0x69, 0x2e, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x12, 0x04, 0x67, 0x72, 0x70, 0x63, 0x22, 0x25, 0x0a, 0x0b, 0x49, 0x64, 0x65, 0x6e, 0x74,
-	0x69, 0x74, 0x79, 0x52, 0x65, 0x71, 0x12, 0x16, 0x0a, 0x06, 0x55, 0x73, 0x65, 0x72, 0x49, 0x44,
-	0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x55, 0x73, 0x65, 0x72, 0x49, 0x44, 0x22, 0x5d,
-	0x0a, 0x0b, 0x49, 0x64, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x79, 0x52, 0x65, 0x73, 0x12, 0x16, 0x0a,
-	0x06, 0x55, 0x73, 0x65, 0x72, 0x49, 0x44, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x55,
-	0x73, 0x65, 0x72, 0x49, 0x44, 0x12, 0x12, 0x0a, 0x04, 0x52, 0x6f, 0x6c, 0x65, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x04, 0x52, 0x6f, 0x6c, 0x65, 0x12, 0x22, 0x0a, 0x0c, 0x52, 0x65, 0x73,
-	0x74, 0x61, 0x75, 0x72, 0x61, 0x6e, 0x74, 0x49, 0x44, 0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52,
-	0x0c, 0x52, 0x65, 0x73, 0x74, 0x61, 0x75, 0x72, 0x61, 0x6e, 0x74, 0x49, 0x44, 0x22, 0x20, 0x0a,
-	0x0e, 0x47, 0x65, 0x74, 0x4d, 0x65, 0x6e, 0x75, 0x49, 0x74, 0x65, 0x6d, 0x52, 0x65, 0x71, 0x12,
-	0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x02, 0x69, 0x64, 0x22,
-	0x24, 0x0a, 0x0e, 0x47, 0x65, 0x74, 0x4d, 0x65, 0x6e, 0x75, 0x49, 0x74, 0x65, 0x6d, 0x52, 0x65,
-	0x73, 0x12, 0x12, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x04, 0x64, 0x61, 0x74, 0x61, 0x32, 0x48, 0x0a, 0x0f, 0x4d, 0x65, 0x6e, 0x75, 0x41, 0x75, 0x74,
-	0x68, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x35, 0x0a, 0x0b, 0x47, 0x65, 0x74, 0x49,
-	0x64, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x79, 0x12, 0x11, 0x2e, 0x67, 0x72, 0x70, 0x63, 0x2e, 0x49,
-	0x64, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x79, 0x52, 0x65, 0x71, 0x1a, 0x11, 0x2e, 0x67, 0x72, 0x70,
-	0x63, 0x2e, 0x49, 0x64, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x79, 0x52, 0x65, 0x73, 0x22, 0x00, 0x32,
-	0x4e, 0x0a, 0x0f, 0x4d, 0x65, 0x6e, 0x75, 0x49, 0x74, 0x65, 0x6d, 0x53, 0x65, 0x72, 0x76, 0x69,
-	0x63, 0x65, 0x12, 0x3b, 0x0a, 0x0b, 0x47, 0x65, 0x74, 0x4d, 0x65, 0x6e, 0x75, 0x49, 0x74, 0x65,
-	0x6d, 0x12, 0x14, 0x2e, 0x67, 0x72, 0x70, 0x63, 0x2e, 0x47, 0x65, 0x74, 0x4d, 0x65, 0x6e, 0x75,
-	0x49, 0x74, 0x65, 0x6d, 0x52, 0x65, 0x71, 0x1a, 0x14, 0x2e, 0x67, 0x72, 0x70, 0x63, 0x2e, 0x47,
-	0x65, 0x74, 0x4d, 0x65, 0x6e, 0x75, 0x49, 0x74, 0x65, 0x6d, 0x52, 0x65, 0x73, 0x22, 0x00, 0x42,
-	0x0a, 0x5a, 0x08, 0x2e, 0x2f, 0x67, 0x72, 0x70, 0x63, 0x50, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x33,
+	0x6f, 0x12, 0x04, 0x67, 0x72, 0x70, 0x63, 0x22, 0x28, 0x0a, 0x0e, 0x49, 0x64, 0x65, 0x6e, 0x74,
+	0x69, 0x74, 0x79, 0x52, 0x65, 0x73, 0x52, 0x65, 0x71, 0x12, 0x16, 0x0a, 0x06, 0x55, 0x73, 0x65,
+	0x72, 0x49, 0x44, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x55, 0x73, 0x65, 0x72, 0x49,
+	0x44, 0x22, 0x61, 0x0a, 0x0f, 0x49, 0x64, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x79, 0x52, 0x65, 0x73,
+	0x52, 0x65, 0x73, 0x70, 0x12, 0x16, 0x0a, 0x06, 0x55, 0x73, 0x65, 0x72, 0x49, 0x44, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x55, 0x73, 0x65, 0x72, 0x49, 0x44, 0x12, 0x12, 0x0a, 0x04,
+	0x52, 0x6f, 0x6c, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x52, 0x6f, 0x6c, 0x65,
+	0x12, 0x22, 0x0a, 0x0c, 0x52, 0x65, 0x73, 0x74, 0x61, 0x75, 0x72, 0x61, 0x6e, 0x74, 0x49, 0x44,
+	0x18, 0x03, 0x20, 0x01, 0x28, 0x05, 0x52, 0x0c, 0x52, 0x65, 0x73, 0x74, 0x61, 0x75, 0x72, 0x61,
+	0x6e, 0x74, 0x49, 0x44, 0x22, 0x25, 0x0a, 0x0b, 0x49, 0x64, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x79,
+	0x52, 0x65, 0x71, 0x12, 0x16, 0x0a, 0x06, 0x55, 0x73, 0x65, 0x72, 0x49, 0x44, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x05, 0x52, 0x06, 0x55, 0x73, 0x65, 0x72, 0x49, 0x44, 0x22, 0x26, 0x0a, 0x0c, 0x49,
+	0x64, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x79, 0x52, 0x65, 0x73, 0x70, 0x12, 0x16, 0x0a, 0x06, 0x55,
+	0x73, 0x65, 0x72, 0x49, 0x44, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x55, 0x73, 0x65,
+	0x72, 0x49, 0x44, 0x22, 0x20, 0x0a, 0x0e, 0x47, 0x65, 0x74, 0x4d, 0x65, 0x6e, 0x75, 0x49, 0x74,
+	0x65, 0x6d, 0x52, 0x65, 0x71, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x02, 0x69, 0x64, 0x22, 0x24, 0x0a, 0x0e, 0x47, 0x65, 0x74, 0x4d, 0x65, 0x6e, 0x75,
+	0x49, 0x74, 0x65, 0x6d, 0x52, 0x65, 0x73, 0x12, 0x12, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x32, 0x8e, 0x01, 0x0a, 0x0f,
+	0x49, 0x64, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x79, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12,
+	0x3f, 0x0a, 0x0e, 0x47, 0x65, 0x74, 0x52, 0x65, 0x73, 0x49, 0x64, 0x65, 0x6e, 0x74, 0x69, 0x74,
+	0x79, 0x12, 0x14, 0x2e, 0x67, 0x72, 0x70, 0x63, 0x2e, 0x49, 0x64, 0x65, 0x6e, 0x74, 0x69, 0x74,
+	0x79, 0x52, 0x65, 0x73, 0x52, 0x65, 0x71, 0x1a, 0x15, 0x2e, 0x67, 0x72, 0x70, 0x63, 0x2e, 0x49,
+	0x64, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x79, 0x52, 0x65, 0x73, 0x52, 0x65, 0x73, 0x70, 0x22, 0x00,
+	0x12, 0x3a, 0x0a, 0x0f, 0x47, 0x65, 0x74, 0x55, 0x73, 0x65, 0x72, 0x49, 0x64, 0x65, 0x6e, 0x74,
+	0x69, 0x74, 0x79, 0x12, 0x11, 0x2e, 0x67, 0x72, 0x70, 0x63, 0x2e, 0x49, 0x64, 0x65, 0x6e, 0x74,
+	0x69, 0x74, 0x79, 0x52, 0x65, 0x71, 0x1a, 0x12, 0x2e, 0x67, 0x72, 0x70, 0x63, 0x2e, 0x49, 0x64,
+	0x65, 0x6e, 0x74, 0x69, 0x74, 0x79, 0x52, 0x65, 0x73, 0x70, 0x22, 0x00, 0x32, 0x4e, 0x0a, 0x0f,
+	0x4d, 0x65, 0x6e, 0x75, 0x49, 0x74, 0x65, 0x6d, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12,
+	0x3b, 0x0a, 0x0b, 0x47, 0x65, 0x74, 0x4d, 0x65, 0x6e, 0x75, 0x49, 0x74, 0x65, 0x6d, 0x12, 0x14,
+	0x2e, 0x67, 0x72, 0x70, 0x63, 0x2e, 0x47, 0x65, 0x74, 0x4d, 0x65, 0x6e, 0x75, 0x49, 0x74, 0x65,
+	0x6d, 0x52, 0x65, 0x71, 0x1a, 0x14, 0x2e, 0x67, 0x72, 0x70, 0x63, 0x2e, 0x47, 0x65, 0x74, 0x4d,
+	0x65, 0x6e, 0x75, 0x49, 0x74, 0x65, 0x6d, 0x52, 0x65, 0x73, 0x22, 0x00, 0x42, 0x0a, 0x5a, 0x08,
+	0x2e, 0x2f, 0x67, 0x72, 0x70, 0x63, 0x50, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -270,20 +373,24 @@ func file_transport_grpc_proto_umai_proto_rawDescGZIP() []byte {
 	return file_transport_grpc_proto_umai_proto_rawDescData
 }
 
-var file_transport_grpc_proto_umai_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_transport_grpc_proto_umai_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_transport_grpc_proto_umai_proto_goTypes = []interface{}{
-	(*IdentityReq)(nil),    // 0: grpc.IdentityReq
-	(*IdentityRes)(nil),    // 1: grpc.IdentityRes
-	(*GetMenuItemReq)(nil), // 2: grpc.GetMenuItemReq
-	(*GetMenuItemRes)(nil), // 3: grpc.GetMenuItemRes
+	(*IdentityResReq)(nil),  // 0: grpc.IdentityResReq
+	(*IdentityResResp)(nil), // 1: grpc.IdentityResResp
+	(*IdentityReq)(nil),     // 2: grpc.IdentityReq
+	(*IdentityResp)(nil),    // 3: grpc.IdentityResp
+	(*GetMenuItemReq)(nil),  // 4: grpc.GetMenuItemReq
+	(*GetMenuItemRes)(nil),  // 5: grpc.GetMenuItemRes
 }
 var file_transport_grpc_proto_umai_proto_depIdxs = []int32{
-	0, // 0: grpc.MenuAuthService.GetIdentity:input_type -> grpc.IdentityReq
-	2, // 1: grpc.MenuItemService.GetMenuItem:input_type -> grpc.GetMenuItemReq
-	1, // 2: grpc.MenuAuthService.GetIdentity:output_type -> grpc.IdentityRes
-	3, // 3: grpc.MenuItemService.GetMenuItem:output_type -> grpc.GetMenuItemRes
-	2, // [2:4] is the sub-list for method output_type
-	0, // [0:2] is the sub-list for method input_type
+	0, // 0: grpc.IdentityService.GetResIdentity:input_type -> grpc.IdentityResReq
+	2, // 1: grpc.IdentityService.GetUserIdentity:input_type -> grpc.IdentityReq
+	4, // 2: grpc.MenuItemService.GetMenuItem:input_type -> grpc.GetMenuItemReq
+	1, // 3: grpc.IdentityService.GetResIdentity:output_type -> grpc.IdentityResResp
+	3, // 4: grpc.IdentityService.GetUserIdentity:output_type -> grpc.IdentityResp
+	5, // 5: grpc.MenuItemService.GetMenuItem:output_type -> grpc.GetMenuItemRes
+	3, // [3:6] is the sub-list for method output_type
+	0, // [0:3] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -296,7 +403,7 @@ func file_transport_grpc_proto_umai_proto_init() {
 	}
 	if !protoimpl.UnsafeEnabled {
 		file_transport_grpc_proto_umai_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*IdentityReq); i {
+			switch v := v.(*IdentityResReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -308,7 +415,7 @@ func file_transport_grpc_proto_umai_proto_init() {
 			}
 		}
 		file_transport_grpc_proto_umai_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*IdentityRes); i {
+			switch v := v.(*IdentityResResp); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -320,7 +427,7 @@ func file_transport_grpc_proto_umai_proto_init() {
 			}
 		}
 		file_transport_grpc_proto_umai_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetMenuItemReq); i {
+			switch v := v.(*IdentityReq); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -332,6 +439,30 @@ func file_transport_grpc_proto_umai_proto_init() {
 			}
 		}
 		file_transport_grpc_proto_umai_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*IdentityResp); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_transport_grpc_proto_umai_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetMenuItemReq); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_transport_grpc_proto_umai_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetMenuItemRes); i {
 			case 0:
 				return &v.state
@@ -350,7 +481,7 @@ func file_transport_grpc_proto_umai_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_transport_grpc_proto_umai_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   2,
 		},

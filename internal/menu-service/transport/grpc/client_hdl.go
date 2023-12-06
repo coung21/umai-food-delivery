@@ -1,18 +1,33 @@
 package grpc
 
 import (
+	"common"
 	"context"
-	"log"
+	"errors"
 	"menu-service/transport/grpc/grpcPb"
+
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
-func GetIdentityHdl(c grpcPb.MenuAuthServiceClient, uid int) (int, string, int) {
-	resp, err := c.GetIdentity(context.Background(), &grpcPb.IdentityReq{
+func GetResIdentityHdl(c grpcPb.IdentityServiceClient, uid int) (map[string]interface{}, error) {
+	resp, err := c.GetResIdentity(context.Background(), &grpcPb.IdentityResReq{
 		UserID: int32(uid),
 	})
 	if err != nil {
-		log.Fatalf("error while call %v", err)
+		if statusErr, ok := status.FromError(err); ok {
+			if statusErr.Code() == codes.Unauthenticated {
+				return nil, common.Unauthorized
+			}
+			return nil, errors.New(statusErr.Message())
+		}
 	}
 
-	return int(resp.GetUserID()), resp.GetRole(), int(resp.GetRestaurantID())
+	indentity := map[string]interface{}{
+		"user_id":       int(resp.GetUserID()),
+		"role":          resp.GetRole(),
+		"restaurant_id": int(resp.GetRestaurantID()),
+	}
+
+	return indentity, nil
 }

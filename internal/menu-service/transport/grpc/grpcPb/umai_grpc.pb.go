@@ -18,86 +18,122 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// MenuAuthServiceClient is the client API for MenuAuthService service.
+// IdentityServiceClient is the client API for IdentityService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type MenuAuthServiceClient interface {
-	GetIdentity(ctx context.Context, in *IdentityReq, opts ...grpc.CallOption) (*IdentityRes, error)
+type IdentityServiceClient interface {
+	GetResIdentity(ctx context.Context, in *IdentityResReq, opts ...grpc.CallOption) (*IdentityResResp, error)
+	GetUserIdentity(ctx context.Context, in *IdentityReq, opts ...grpc.CallOption) (*IdentityResp, error)
 }
 
-type menuAuthServiceClient struct {
+type identityServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewMenuAuthServiceClient(cc grpc.ClientConnInterface) MenuAuthServiceClient {
-	return &menuAuthServiceClient{cc}
+func NewIdentityServiceClient(cc grpc.ClientConnInterface) IdentityServiceClient {
+	return &identityServiceClient{cc}
 }
 
-func (c *menuAuthServiceClient) GetIdentity(ctx context.Context, in *IdentityReq, opts ...grpc.CallOption) (*IdentityRes, error) {
-	out := new(IdentityRes)
-	err := c.cc.Invoke(ctx, "/grpc.MenuAuthService/GetIdentity", in, out, opts...)
+func (c *identityServiceClient) GetResIdentity(ctx context.Context, in *IdentityResReq, opts ...grpc.CallOption) (*IdentityResResp, error) {
+	out := new(IdentityResResp)
+	err := c.cc.Invoke(ctx, "/grpc.IdentityService/GetResIdentity", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// MenuAuthServiceServer is the server API for MenuAuthService service.
-// All implementations must embed UnimplementedMenuAuthServiceServer
+func (c *identityServiceClient) GetUserIdentity(ctx context.Context, in *IdentityReq, opts ...grpc.CallOption) (*IdentityResp, error) {
+	out := new(IdentityResp)
+	err := c.cc.Invoke(ctx, "/grpc.IdentityService/GetUserIdentity", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// IdentityServiceServer is the server API for IdentityService service.
+// All implementations must embed UnimplementedIdentityServiceServer
 // for forward compatibility
-type MenuAuthServiceServer interface {
-	GetIdentity(context.Context, *IdentityReq) (*IdentityRes, error)
-	mustEmbedUnimplementedMenuAuthServiceServer()
+type IdentityServiceServer interface {
+	GetResIdentity(context.Context, *IdentityResReq) (*IdentityResResp, error)
+	GetUserIdentity(context.Context, *IdentityReq) (*IdentityResp, error)
+	mustEmbedUnimplementedIdentityServiceServer()
 }
 
-// UnimplementedMenuAuthServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedMenuAuthServiceServer struct {
+// UnimplementedIdentityServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedIdentityServiceServer struct {
 }
 
-func (UnimplementedMenuAuthServiceServer) GetIdentity(context.Context, *IdentityReq) (*IdentityRes, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetIdentity not implemented")
+func (UnimplementedIdentityServiceServer) GetResIdentity(context.Context, *IdentityResReq) (*IdentityResResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetResIdentity not implemented")
 }
-func (UnimplementedMenuAuthServiceServer) mustEmbedUnimplementedMenuAuthServiceServer() {}
+func (UnimplementedIdentityServiceServer) GetUserIdentity(context.Context, *IdentityReq) (*IdentityResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUserIdentity not implemented")
+}
+func (UnimplementedIdentityServiceServer) mustEmbedUnimplementedIdentityServiceServer() {}
 
-// UnsafeMenuAuthServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to MenuAuthServiceServer will
+// UnsafeIdentityServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to IdentityServiceServer will
 // result in compilation errors.
-type UnsafeMenuAuthServiceServer interface {
-	mustEmbedUnimplementedMenuAuthServiceServer()
+type UnsafeIdentityServiceServer interface {
+	mustEmbedUnimplementedIdentityServiceServer()
 }
 
-func RegisterMenuAuthServiceServer(s grpc.ServiceRegistrar, srv MenuAuthServiceServer) {
-	s.RegisterService(&MenuAuthService_ServiceDesc, srv)
+func RegisterIdentityServiceServer(s grpc.ServiceRegistrar, srv IdentityServiceServer) {
+	s.RegisterService(&IdentityService_ServiceDesc, srv)
 }
 
-func _MenuAuthService_GetIdentity_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _IdentityService_GetResIdentity_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(IdentityResReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IdentityServiceServer).GetResIdentity(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/grpc.IdentityService/GetResIdentity",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IdentityServiceServer).GetResIdentity(ctx, req.(*IdentityResReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IdentityService_GetUserIdentity_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(IdentityReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MenuAuthServiceServer).GetIdentity(ctx, in)
+		return srv.(IdentityServiceServer).GetUserIdentity(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/grpc.MenuAuthService/GetIdentity",
+		FullMethod: "/grpc.IdentityService/GetUserIdentity",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MenuAuthServiceServer).GetIdentity(ctx, req.(*IdentityReq))
+		return srv.(IdentityServiceServer).GetUserIdentity(ctx, req.(*IdentityReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// MenuAuthService_ServiceDesc is the grpc.ServiceDesc for MenuAuthService service.
+// IdentityService_ServiceDesc is the grpc.ServiceDesc for IdentityService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var MenuAuthService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "grpc.MenuAuthService",
-	HandlerType: (*MenuAuthServiceServer)(nil),
+var IdentityService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "grpc.IdentityService",
+	HandlerType: (*IdentityServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetIdentity",
-			Handler:    _MenuAuthService_GetIdentity_Handler,
+			MethodName: "GetResIdentity",
+			Handler:    _IdentityService_GetResIdentity_Handler,
+		},
+		{
+			MethodName: "GetUserIdentity",
+			Handler:    _IdentityService_GetUserIdentity_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

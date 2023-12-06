@@ -9,7 +9,7 @@ import (
 )
 
 type GrpcClient struct {
-	AuthC grpcPb.MenuAuthServiceClient
+	AuthC grpcPb.IdentityServiceClient
 }
 
 func RunGrpcClient() *GrpcClient {
@@ -21,7 +21,7 @@ func RunGrpcClient() *GrpcClient {
 
 	// defer conn.Close()
 
-	authc := grpcPb.NewMenuAuthServiceClient(conn)
+	authc := grpcPb.NewIdentityServiceClient(conn)
 
 	return &GrpcClient{AuthC: authc}
 }

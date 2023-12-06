@@ -10,7 +10,7 @@ import (
 )
 
 type GrpcServer struct {
-	grpcPb.MenuAuthServiceServer
+	grpcPb.IdentityServiceServer
 	authRepo auth.Repository
 }
 
@@ -27,7 +27,7 @@ func RunGrpcServer(authRepo auth.Repository) {
 
 	s := grpc.NewServer()
 
-	grpcPb.RegisterMenuAuthServiceServer(s, &GrpcServer{authRepo: authRepo})
+	grpcPb.RegisterIdentityServiceServer(s, &GrpcServer{authRepo: authRepo})
 	// log.Println("MenuAuth Grpc Server is running on", lis.Addr().String())
 
 	if err := s.Serve(lis); err != nil {

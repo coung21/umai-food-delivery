@@ -19,7 +19,7 @@ func NewCacheRepo(cdb *redis.Client) *CacheRepo {
 }
 
 func (c *CacheRepo) ListCart(ctx context.Context, id int) ([]model.CartItem, error) {
-	var cartItems []model.CartItem
+	cartItems := []model.CartItem{}
 	data, err := c.cdb.HGetAll(ctx, fmt.Sprintf("cart:%d", id)).Result()
 	if err != nil {
 		if err == redis.Nil {
@@ -53,7 +53,7 @@ func (c *CacheRepo) FindCartItem(ctx context.Context, uid int, mid string) *int 
 }
 
 func (c *CacheRepo) InsertCartItem(ctx context.Context, uid int, mid string) bool {
-	if err := c.cdb.HSet(ctx, fmt.Sprintf("cart:%d", uid), mid).Err(); err != nil {
+	if err := c.cdb.HSet(ctx, fmt.Sprintf("cart:%d", uid), mid, 1).Err(); err != nil {
 		return false
 	}
 
@@ -64,6 +64,11 @@ func (c *CacheRepo) IncrCartItem(ctx context.Context, uid int, mid string, amoun
 	val, err := c.cdb.HIncrBy(ctx, fmt.Sprintf("cart:%d", uid), mid, int64(amount)).Result()
 	if err != nil {
 		return int(val), err
+	}
+
+	if val <= 0 {
+		c.DelCartItem(ctx, uid, mid)
+		return 0, nil
 	}
 	return int(val), nil
 }

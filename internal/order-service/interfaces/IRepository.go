@@ -7,8 +7,9 @@ import (
 
 type CacheRepository interface {
 	ListCart(ctx context.Context, id int) ([]model.CartItem, error)
-	FindCartItem(ctx context.Context, uid int, mid string) bool
-	InsertCartItem(ctx context.Context, uid int, mid string) bool
-	IncrCartItem(ctx context.Context, uid int, mid string, amount int) (int, error)
-	DelCartItem(ctx context.Context, uid int, mid string) bool
+	// FindCartItem(ctx context.Context, uid int, mid string) bool
+	// InsertCartItem(ctx context.Context, uid int, mid string) int
+	// IncrCartItem(ctx context.Context, uid int, mid string, amount int) int
+	InsertCartItem(ctx context.Context, uid int, mid string, amount int) int
+	DelCartItem(ctx context.Context, uid int, mid ...string) int
 }

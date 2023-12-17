@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (h *orderHandler) AddItemToCartHdl() gin.HandlerFunc {
+func (h *orderHandler) ModifyCartHdl() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		uid := ctx.Value(common.CuserId).(int)
 
@@ -33,12 +33,9 @@ func (h *orderHandler) AddItemToCartHdl() gin.HandlerFunc {
 			}
 		}
 
-		added := h.orderUc.AddItemToCart(ctx, uid, newCartItem.ItemID, newCartItem.Quantity)
+		val := h.orderUc.ModifyCart(ctx, uid, newCartItem.ItemID, newCartItem.Quantity)
 
-		if added {
-			ctx.JSON(http.StatusOK, common.NewHttpSuccessResponse(http.StatusOK, "Add to cart successfully", added))
-		} else {
-			ctx.JSON(http.StatusBadRequest, common.NewHttpSuccessResponse(http.StatusBadRequest, "Add to cart failingly", added))
-		}
+		ctx.JSON(http.StatusOK, common.NewHttpSuccessResponse(http.StatusOK, "Modify Cart Successfully", val))
+
 	}
 }

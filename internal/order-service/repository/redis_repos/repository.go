@@ -1,7 +1,6 @@
 package repository
 
 import (
-	"common"
 	"context"
 	"fmt"
 	"order-service/model"
@@ -22,9 +21,6 @@ func (c *CacheRepo) ListCart(ctx context.Context, id int) ([]model.CartItem, err
 	cartItems := []model.CartItem{}
 	data, err := c.cdb.HGetAll(ctx, fmt.Sprintf("cart:%d", id)).Result()
 	if err != nil {
-		if err == redis.Nil {
-			return nil, common.ErrMissCache
-		}
 		return nil, err
 	}
 
@@ -39,39 +35,32 @@ func (c *CacheRepo) ListCart(ctx context.Context, id int) ([]model.CartItem, err
 	return cartItems, nil
 }
 
-func (c *CacheRepo) FindCartItem(ctx context.Context, uid int, mid string) bool {
-	_, err := c.cdb.HGet(ctx, fmt.Sprintf("cart:%d", uid), mid).Result()
-	if err == redis.Nil {
-		return false
-	}
+// func (c *CacheRepo) FindCartItem(ctx context.Context, uid int, mid string) bool {
+// 	_, err := c.cdb.HGet(ctx, fmt.Sprintf("cart:%d", uid), mid).Result()
+// 	if err == redis.Nil {
+// 		return false
+// 	}
 
-	return true
-}
+// 	return true
+// }
 
-func (c *CacheRepo) InsertCartItem(ctx context.Context, uid int, mid string) bool {
-	if err := c.cdb.HSet(ctx, fmt.Sprintf("cart:%d", uid), mid, 1).Err(); err != nil {
-		return false
-	}
+// func (c *CacheRepo) InsertCartItem(ctx context.Context, uid int, mid string) int {
+// 	val := c.cdb.HSet(ctx, fmt.Sprintf("cart:%d", uid), mid, 1).Val()
 
-	return true
-}
+// 	return int(val)
+// }
 
-func (c *CacheRepo) IncrCartItem(ctx context.Context, uid int, mid string, amount int) (int, error) {
-	val, err := c.cdb.HIncrBy(ctx, fmt.Sprintf("cart:%d", uid), mid, int64(amount)).Result()
-	if err != nil {
-		return int(val), err
-	}
+func (c *CacheRepo) InsertCartItem(ctx context.Context, uid int, mid string, amount int) int {
+	val := c.cdb.HIncrBy(ctx, fmt.Sprintf("cart:%d", uid), mid, int64(amount)).Val()
 
 	if val <= 0 {
 		c.DelCartItem(ctx, uid, mid)
-		return 0, nil
+		return 0
 	}
-	return int(val), nil
+	return int(val)
 }
 
-func (c *CacheRepo) DelCartItem(ctx context.Context, uid int, mid string) bool {
-	if err := c.cdb.HDel(ctx, fmt.Sprintf("cart:%d", uid), mid).Err(); err != nil {
-		return false
-	}
-	return true
+func (c *CacheRepo) DelCartItem(ctx context.Context, uid int, mid ...string) int {
+	val := c.cdb.HDel(ctx, fmt.Sprintf("cart:%d", uid), mid...).Val()
+	return int(val)
 }

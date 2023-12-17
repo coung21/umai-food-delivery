@@ -46,7 +46,9 @@ func Auth(tokenprovider jwt.TokenProvider, grpcCServ *grpc.GrpcClient) gin.Handl
 
 		uid, err := grpc.GetUserIdentityHdl(grpcCServ.AuthC, claims.ID)
 		if err != nil {
-			ctx.JSON(http.StatusUnauthorized, common.NewRestErr(http.StatusUnauthorized, common.Unauthorized.Error(), err))
+			if err == common.Unauthorized {
+				ctx.JSON(http.StatusUnauthorized, common.NewRestErr(http.StatusUnauthorized, common.Unauthorized.Error(), err))
+			}
 			ctx.Abort()
 			return
 		}

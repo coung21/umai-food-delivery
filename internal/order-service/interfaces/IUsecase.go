@@ -7,4 +7,5 @@ import (
 
 type Usecase interface {
 	ListCartItems(ctx context.Context, id int) ([]model.CartItem, error)
+	AddItemToCart(ctx context.Context, uid int, mid string, amount int) bool
 }

@@ -1,27 +1,31 @@
 package grpc
 
 import (
+	"common"
 	"context"
 	"errors"
-	"log"
 	"order-service/transport/grpc/grpcPb"
 
+	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
 
-func GetMenuItemHdl(c grpcPb.MenuItemServiceClient, id string) (string, error) {
+func GetMenuItemHdl(c grpcPb.MenuItemServiceClient, id string) (*string, error) {
 	resp, err := c.GetMenuItem(context.Background(), &grpcPb.GetMenuItemReq{
 		Id: id,
 	})
 	if err != nil {
 		if errStatus, ok := status.FromError(err); ok {
-			log.Println(errStatus.Message())
-			log.Println(errStatus.Code())
-			return "", errors.New(errStatus.Message())
+			if errStatus.Code() == codes.NotFound {
+				return nil, common.NotFound
+			} else if errStatus.Code() == codes.InvalidArgument {
+				return nil, common.BadQueryParams
+			}
+			return nil, errors.New(errStatus.Message())
 		}
 	}
-
-	return resp.GetData(), nil
+	data := resp.GetData()
+	return &data, nil
 }
 
 func GetUserIdentityHdl(c grpcPb.IdentityServiceClient, id int) (*int, error) {
@@ -30,8 +34,9 @@ func GetUserIdentityHdl(c grpcPb.IdentityServiceClient, id int) (*int, error) {
 	})
 	if err != nil {
 		if errStatus, ok := status.FromError(err); ok {
-			log.Println(errStatus.Message())
-			log.Println(errStatus.Code())
+			if errStatus.Code() == codes.Unauthenticated {
+				return nil, common.Unauthorized
+			}
 			return nil, errors.New(errStatus.Message())
 		}
 	}

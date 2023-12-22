@@ -35,13 +35,13 @@ func (c *CacheRepo) ListCart(ctx context.Context, id int) ([]model.CartItem, err
 	return cartItems, nil
 }
 
-// func (c *CacheRepo) FindCartItem(ctx context.Context, uid int, mid string) bool {
-// 	_, err := c.cdb.HGet(ctx, fmt.Sprintf("cart:%d", uid), mid).Result()
+// func (c *CacheRepo) FindCartItem(ctx context.Context, uid int, mid string) (string, error) {
+// 	val, err := c.cdb.HGet(ctx, fmt.Sprintf("cart:%d", uid), mid).Result()
 // 	if err == redis.Nil {
-// 		return false
+// 		return "", common.NotFound
 // 	}
 
-// 	return true
+// 	return val, nil
 // }
 
 // func (c *CacheRepo) InsertCartItem(ctx context.Context, uid int, mid string) int {

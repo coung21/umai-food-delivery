@@ -15,6 +15,7 @@ type MenuItem struct {
 	Description  string             `json:"description" bson:"description"`
 	Image        *common.Image      `json:"image" bson:"image" validate:"required"`
 	Price        float32            `json:"price" bson:"price" validate:"required"`
+	Category     string             `json:"category" bson:"category" validate:"required"`
 	UpdatedAt    time.Time          `json:"updated_at,omitempty" bson:"updated_at"`
 	CreatedAt    time.Time          `json:"created_at,omitempty" bson:"created_at"`
 }
@@ -47,3 +48,19 @@ func (m *UpdateMenuItem) MarshalBSON() ([]byte, error) {
 	type my UpdateMenuItem
 	return bson.Marshal((*my)(m))
 }
+
+const (
+	CategoryRice    = "rice"
+	CategoryNoodle  = "noodle"
+	CategoryCoffee  = "coffee"
+	CategorySnack   = "snack"
+	CategoryMilkTea = "milk_tea"
+	CategoryJuice   = "juice"
+	CategoryChicken = "chicken"
+	CategoryPizza   = "pizza"
+	CategoryBurger  = "burger"
+	CategoryPho     = "pho"
+	CategoryBun     = "bun"
+	CategoryBanhMi  = "banh_mi"
+	CategoryOther   = "other"
+)

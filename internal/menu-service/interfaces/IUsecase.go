@@ -13,4 +13,5 @@ type Usecase interface {
 	GetMenuItem(ctx context.Context, id string) (*model.MenuItem, error)
 	AddFavorite(ctx context.Context, uid int, mid string) (*string, error)
 	DeleteFavorite(ctx context.Context, uid int, mid string) (*string, error)
+	ListFavorites(ctx context.Context, uid int) (*[]model.MenuItem, error)
 }

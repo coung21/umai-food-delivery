@@ -56,7 +56,7 @@ func (c *cacheMenuRepo) SetFavorite(ctx context.Context, uid int, mid string) er
 	return c.cdb.SAdd(ctx, key, mid).Err()
 }
 
-func (c *cacheMenuRepo) ListFavoriteMenuItems(ctx context.Context, uid int) ([]string, error) {
+func (c *cacheMenuRepo) ListFavorites(ctx context.Context, uid int) ([]string, error) {
 	key := fmt.Sprintf("favorites:%d", uid)
 
 	mids, err := c.cdb.SMembers(ctx, key).Result()

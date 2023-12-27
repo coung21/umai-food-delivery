@@ -19,5 +19,6 @@ func MenuItemRoutes(r *gin.Engine, handlers *menuHandler) {
 		v1.GET("/menu/:menu_id", handlers.GetMenuItemHdl())
 		v1.POST("/menu/:id/favorite", CustomerAuthMdw, handlers.AddFavoriteHdl())
 		v1.DELETE("/menu/:id/favorite", CustomerAuthMdw, handlers.DeleteFavoriteHdl())
+		v1.GET("/menu/favorite", CustomerAuthMdw, handlers.ListFavoritesHdl())
 	}
 }

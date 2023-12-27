@@ -67,3 +67,39 @@ func RestaurantAuth(tokenprovider jwt.TokenProvider, grpcCServ *grpc.GrpcClient)
 		}
 	}
 }
+
+func CustomerAuth(tokenprovider jwt.TokenProvider, grpcCServ *grpc.GrpcClient) gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		token, err := extractTokenFromHeaderString(ctx.GetHeader("Authorization"))
+		if err != nil {
+			ctx.JSON(http.StatusUnauthorized, common.NewRestErr(http.StatusUnauthorized, err.Error(), err))
+			ctx.Abort()
+			return
+		}
+
+		claims, err := tokenprovider.Validate(token)
+
+		if err != nil {
+			ctx.JSON(http.StatusUnauthorized, common.NewRestErr(http.StatusUnauthorized, common.InvalidJWTToken.Error(), err))
+			ctx.Abort()
+			return
+		}
+
+		identity, err := grpc.GetUserIdentityHdl(grpcCServ.AuthC, claims.ID)
+		if err != nil {
+			ctx.JSON(http.StatusUnauthorized, common.NewRestErr(http.StatusUnauthorized, common.Unauthorized.Error(), err))
+			ctx.Abort()
+			return
+		}
+
+		if claims.ID == *identity && claims.Role == common.RoleCustomer {
+			ctx.Set(common.CuserId, claims.ID)
+			ctx.Set(common.CuserRole, claims.Role)
+			ctx.Next()
+		} else {
+			ctx.JSON(http.StatusForbidden, common.NewRestErr(http.StatusForbidden, common.Forbidden.Error(), err))
+			ctx.Abort()
+			return
+		}
+	}
+}

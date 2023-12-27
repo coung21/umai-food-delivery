@@ -23,7 +23,7 @@ func extractTokenFromHeaderString(s string) (string, error) {
 	return parts[1], nil
 }
 
-func Auth(tokenprovider jwt.TokenProvider, grpcCServ *grpc.GrpcClient) gin.HandlerFunc {
+func RestaurantAuth(tokenprovider jwt.TokenProvider, grpcCServ *grpc.GrpcClient) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		id, err := strconv.Atoi(ctx.Param("id"))
 		if err != nil {

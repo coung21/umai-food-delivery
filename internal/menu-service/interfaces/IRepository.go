@@ -12,6 +12,7 @@ type Repository interface {
 	UpdateMenuItem(ctx context.Context, rid int, mid string, upd *model.UpdateMenuItem) (*model.MenuItem, error)
 	DeleteMenuItem(ctx context.Context, id string) (int, error)
 	FindMenuItemByID(ctx context.Context, id string) (*model.MenuItem, error)
+	ListMenuItemByCategory(ctx context.Context, category string) ([]model.MenuItem, error)
 }
 
 type CacheRepository interface {

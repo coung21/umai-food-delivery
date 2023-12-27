@@ -91,8 +91,9 @@ func CustomerAuth(tokenprovider jwt.TokenProvider, grpcCServ *grpc.GrpcClient) g
 			ctx.Abort()
 			return
 		}
-
-		if claims.ID == *identity && claims.Role == common.RoleCustomer {
+		// fmt.Println("user_id", *identity)
+		// fmt.Println("user", *identity, claims.ID, claims.Role)
+		if claims.ID == *identity {
 			ctx.Set(common.CuserId, claims.ID)
 			ctx.Set(common.CuserRole, claims.Role)
 			ctx.Next()

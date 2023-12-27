@@ -12,7 +12,7 @@ func (u *menuUC) AddFavorite(ctx context.Context, uid int, mid string) (*string,
 		return nil, err
 	}
 	// 2. check if menu is already favorite
-	if ex, _ := u.cacheRepo.GetFavorite(ctx, uid, mid); !ex {
+	if ex, _ := u.cacheRepo.GetFavorite(ctx, uid, mid); ex {
 		return nil, model.ErrAlreadyFavorite
 	}
 

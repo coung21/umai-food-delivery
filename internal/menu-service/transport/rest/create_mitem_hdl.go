@@ -30,6 +30,10 @@ func (h *menuHandler) CreateMenuItemHdl() gin.HandlerFunc {
 		//call biz
 		newMItem, err := h.menuUC.CreateMenuItem(ctx, &mitem)
 		if err != nil {
+			if err == model.ErrInvalidCategory {
+				ctx.JSON(http.StatusBadRequest, common.NewRestErr(http.StatusBadRequest, err.Error(), err))
+				return
+			}
 			ctx.JSON(http.StatusInternalServerError, common.NewRestErr(http.StatusInternalServerError, err.Error(), err))
 			return
 		}

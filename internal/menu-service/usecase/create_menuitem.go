@@ -6,9 +6,13 @@ import (
 )
 
 func (u *menuUC) CreateMenuItem(ctx context.Context, mitem *model.MenuItem) (interface{}, error) {
+	if !mitem.IsValidCategory(mitem.Category) {
+		return nil, model.ErrInvalidCategory
+	}
+
 	newMItemId, err := u.menuRepo.InsertMenuItem(ctx, mitem)
 	if err != nil {
-		return 0, err
+		return nil, err
 	}
 	return newMItemId, nil
 }

@@ -2,6 +2,7 @@ package model
 
 import (
 	"common"
+	"errors"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -64,3 +65,14 @@ const (
 	CategoryBanhMi  = "banh_mi"
 	CategoryOther   = "other"
 )
+
+func (*MenuItem) IsValidCategory(category string) bool {
+	switch category {
+	case CategoryRice, CategoryNoodle, CategoryCoffee, CategorySnack, CategoryMilkTea, CategoryJuice, CategoryChicken, CategoryPizza, CategoryBurger, CategoryPho, CategoryBun, CategoryBanhMi, CategoryOther:
+		return true
+	default:
+		return false
+	}
+}
+
+var ErrInvalidCategory = errors.New("invalid category")

@@ -31,3 +31,21 @@ func GetResIdentityHdl(c grpcPb.IdentityServiceClient, uid int) (map[string]inte
 
 	return indentity, nil
 }
+
+func GetUserIdentityHdl(c grpcPb.IdentityServiceClient, id int) (*int, error) {
+	resp, err := c.GetUserIdentity(context.Background(), &grpcPb.IdentityReq{
+		UserID: int32(id),
+	})
+	if err != nil {
+		if errStatus, ok := status.FromError(err); ok {
+			if errStatus.Code() == codes.Unauthenticated {
+				return nil, common.Unauthorized
+			}
+			return nil, errors.New(errStatus.Message())
+		}
+	}
+
+	uid := int(resp.GetUserID())
+
+	return &uid, nil
+}

@@ -71,3 +71,8 @@ func (c *cacheMenuRepo) DelFavorite(ctx context.Context, uid int, mid string) er
 	key := fmt.Sprintf("favorites:%d", uid)
 	return c.cdb.SRem(ctx, key, mid).Err()
 }
+
+func (c *cacheMenuRepo) GetFavorite(ctx context.Context, uid int, mid string) (bool, error) {
+	key := fmt.Sprintf("favorites:%d", uid)
+	return c.cdb.SIsMember(ctx, key, mid).Result()
+}

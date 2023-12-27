@@ -19,4 +19,8 @@ type CacheRepository interface {
 	Set(ctx context.Context, id string, mitem *model.MenuItem, ttl time.Duration) error
 	Get(ctx context.Context, id string) (*model.MenuItem, error)
 	Del(ctx context.Context, id string) error
+	SetFavorite(ctx context.Context, uid int, mid string) error
+	ListFavoriteMenuItems(ctx context.Context, uid int) ([]string, error)
+	DelFavorite(ctx context.Context, uid int, mid string) error
+	GetFavorite(ctx context.Context, uid int, mid string) (bool, error)
 }

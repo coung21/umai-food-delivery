@@ -75,4 +75,7 @@ func (*MenuItem) IsValidCategory(category string) bool {
 	}
 }
 
-var ErrInvalidCategory = errors.New("invalid category")
+var (
+	ErrInvalidCategory = errors.New("invalid category")
+	ErrAlreadyFavorite = errors.New("already favorite")
+)

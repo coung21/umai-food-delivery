@@ -50,3 +50,24 @@ func (c *cacheMenuRepo) Del(ctx context.Context, id string) error {
 	key := fmt.Sprintf("menu:%s", id)
 	return c.cdb.Del(ctx, key).Err()
 }
+
+func (c *cacheMenuRepo) SetFavorite(ctx context.Context, uid int, mid string) error {
+	key := fmt.Sprintf("favorites:%d", uid)
+	return c.cdb.SAdd(ctx, key, mid).Err()
+}
+
+func (c *cacheMenuRepo) ListFavoriteMenuItems(ctx context.Context, uid int) ([]string, error) {
+	key := fmt.Sprintf("favorites:%d", uid)
+
+	mids, err := c.cdb.SMembers(ctx, key).Result()
+	if err != nil {
+		return nil, err
+	}
+
+	return mids, nil
+}
+
+func (c *cacheMenuRepo) DelFavorite(ctx context.Context, uid int, mid string) error {
+	key := fmt.Sprintf("favorites:%d", uid)
+	return c.cdb.SRem(ctx, key, mid).Err()
+}

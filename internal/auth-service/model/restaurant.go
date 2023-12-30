@@ -16,7 +16,7 @@ type Restaurant struct {
 	Cover          *common.Images `json:"cover" gorm:"column:cover;type:json"`
 	OpenHour       *time.Time     `json:"open_hour" gorm:"column:open_hour"`
 	CloseHour      *time.Time     `json:"close_hour" gorm:"column:close_hour"`
-	Location       Location       `json:"location" gorm:"column:location;null;type:json"`
+	Location       *Location      `json:"location" gorm:"column:location;null;type:json"`
 	Rating         float32        `json:"rating" gorm:"column:rating"`
 }
 
@@ -34,6 +34,7 @@ type RestaurantUpdate struct {
 }
 
 type Location struct {
+	PlaceID string  `json:"place_id" gorm:"column:place_id"` // PlaceID is the ID of the place in Goong
 	Address string  `json:"address" gorm:"column:address"`
 	Lat     float64 `json:"lat" gorm:"column:lat"`
 	Lng     float64 `json:"lng" gorm:"column:lng"`
@@ -50,7 +51,7 @@ func (l *Location) Scan(value interface{}) error {
 }
 
 // Implement the valuer interface for Location
-func (l Location) Value() (driver.Value, error) {
+func (l *Location) Value() (driver.Value, error) {
 	bytes, err := json.Marshal(l)
 	if err != nil {
 		return nil, err

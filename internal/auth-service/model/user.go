@@ -2,6 +2,7 @@ package model
 
 import (
 	"common"
+	"time"
 	jwt "umai-auth-service/component"
 
 	"golang.org/x/crypto/bcrypt"
@@ -9,11 +10,11 @@ import (
 
 type User struct {
 	common.SqlModel
-	Name     string        `json:"name" gorm:"column:name;not null"`
-	Email    string        `json:"email" gorm:"column:email;not null;unique"`
+	Name     string        `json:"name" gorm:"column:name;not null;type:varchar(255);"`
+	Email    string        `json:"email" gorm:"column:email;not null;unique;type:varchar(255);"`
 	Avatar   *common.Image `json:"avatar" gorm:"column:avatar;type:json;"`
-	Password string        `json:"password,omitempty" gorm:"column:password;not null"`
-	Phone    string        `json:"phone" gorm:"column:phone;not null;unique"`
+	Password string        `json:"password,omitempty" gorm:"column:password;not null;type:text;"`
+	Phone    string        `json:"phone" gorm:"column:phone;not null;unique;type:varchar(255);"`
 	Role     string        `json:"-" gorm:"column:role;type:ENUM('customer', 'restaurant', 'shipper', 'admin');default:'customer';not null"`
 }
 
@@ -59,9 +60,10 @@ type UserWithToken struct {
 }
 
 type UserUpdate struct {
-	Name   *string       `json:"name" gorm:"column:name;"`
-	Avatar *common.Image `json:"avatar" gorm:"column:avatar"`
-	Phone  *string       `json:"phone" gorm:"column:phone;"`
+	Name     *string       `json:"name" gorm:"column:name;"`
+	Avatar   *common.Image `json:"avatar" gorm:"column:avatar"`
+	Phone    *string       `json:"phone" gorm:"column:phone;"`
+	UpdateAt time.Time     `json:"updated_at" gorm:"column:updated_at"`
 }
 
 func (UserUpdate) TableName() string {

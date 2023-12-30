@@ -5,6 +5,7 @@ import (
 	jwt "menu-service/component"
 	"menu-service/db"
 	"menu-service/middleware"
+	"menu-service/model"
 	mysql_repo "menu-service/repository/mysql_repos"
 	redis_repo "menu-service/repository/redis_repos"
 	"menu-service/transport/grpc"
@@ -39,6 +40,8 @@ func main() {
 	// client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(os.Getenv("MONGODB_URI")))
 	// client, err := db.MongoConn()
 	db, err := db.MysqlConn()
+	//auto migrate
+	db.AutoMigrate(&model.MenuItem{})
 
 	if err != nil {
 		panic(err)

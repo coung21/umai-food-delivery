@@ -21,11 +21,15 @@ import (
 type MenuItem struct {
 	common.SqlModel
 	RestaurantID int           `json:"restaurant_id" gorm:"column:restaurant_id;not null;index"`
-	Name         string        `json:"name" gorm:"column:name;not null"`
-	Description  string        `json:"description" gor:"column:description"`
+	Name         string        `json:"name" gorm:"column:name;not null;type:varchar(255);"`
+	Description  string        `json:"description" gor:"column:description;type:text;"`
 	Image        *common.Image `json:"image" gorm:"column:image;type:json;not null"`
 	Price        float32       `json:"price" gorm:"column:price;not null"`
-	Category     string        `json:"category" gorm:"column:category;not null"`
+	Category     string        `json:"category" gorm:"column:category;not null;type:varchar(255);"`
+}
+
+func (MenuItem) TableName() string {
+	return "menu_items"
 }
 
 // Implement bson.Marshaler, and MarshalBSON() function will be called when you save values of *MenuItem type.

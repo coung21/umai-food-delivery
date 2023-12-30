@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"time"
 	"umai-auth-service/model"
 )
 
@@ -21,6 +22,7 @@ func (r *authRepo) UpdateRole(ctx context.Context, user *model.User) error {
 }
 
 func (r *authRepo) UpdateUser(ctx context.Context, olduser *model.User, upd *model.UserUpdate) (*model.User, error) {
+	upd.UpdateAt = time.Now()
 	if err := r.db.Model(olduser).Updates(upd).Scan(olduser).Error; err != nil {
 		return nil, err
 	}

@@ -5,6 +5,7 @@ import (
 	"os"
 	jwt "umai-auth-service/component"
 	"umai-auth-service/db"
+	"umai-auth-service/model"
 	mysql_repo "umai-auth-service/repository/mysql_repos"
 	cache_repo "umai-auth-service/repository/redis_repos"
 	"umai-auth-service/transport/grpc"
@@ -25,6 +26,11 @@ func (s *Server) Init(r *gin.Engine) {
 		panic(err)
 	}
 	mdb, err := db.MysqlConn()
+	//auto migrate
+	mdb.AutoMigrate(&model.User{})
+	mdb.AutoMigrate(&model.Restaurant{})
+
+	//redis conn
 	cdb := db.RedisConn(fmt.Sprintf("%s:%s", os.Getenv("REDIS_HOST"), os.Getenv("REDIS_PORT")), os.Getenv("REDIS_PASS"), 0)
 	if err != nil {
 		panic(err)

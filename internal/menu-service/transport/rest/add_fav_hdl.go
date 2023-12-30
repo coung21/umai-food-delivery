@@ -4,6 +4,7 @@ import (
 	"common"
 	"menu-service/model"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -13,7 +14,11 @@ func (h *menuHandler) AddFavoriteHdl() gin.HandlerFunc {
 		// 1. get user id from context
 		uid := ctx.Value(common.CuserId).(int)
 		// 2. get menu id from path
-		mid := ctx.Param("id")
+		mid, err := strconv.Atoi(ctx.Param("id"))
+		if err != nil {
+			ctx.JSON(http.StatusBadRequest, common.NewRestErr(http.StatusBadRequest, err.Error(), err))
+			return
+		}
 		// 3. call usecase
 		favoriteID, err := h.menuUC.AddFavorite(ctx, uid, mid)
 		if err != nil {

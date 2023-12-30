@@ -8,7 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func (r *menuRepo) DeleteMenuItem(ctx context.Context, id string) (int, error) {
+func (r *menuRepoMongo) DeleteMenuItem(ctx context.Context, id string) (int, error) {
 	objectID, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
 		return 0, common.BadQueryParams

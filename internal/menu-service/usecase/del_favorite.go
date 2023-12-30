@@ -5,7 +5,7 @@ import (
 	"context"
 )
 
-func (u *menuUC) DeleteFavorite(ctx context.Context, uid int, mid string) (*string, error) {
+func (u *menuUC) DeleteFavorite(ctx context.Context, uid int, mid int) (*int, error) {
 	// 1. check if menu is exist in favorite
 	if ex, _ := u.cacheRepo.GetFavorite(ctx, uid, mid); !ex {
 		return nil, common.NotFound

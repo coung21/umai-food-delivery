@@ -16,7 +16,11 @@ func (h *menuHandler) DeleteMenuItemHdl() gin.HandlerFunc {
 			return
 		}
 
-		mid := ctx.Param("menu_id")
+		mid, err := strconv.Atoi(ctx.Param("menu_id"))
+		if err != nil {
+			ctx.JSON(http.StatusBadRequest, common.NewRestErr(http.StatusBadRequest, err.Error(), err))
+			return
+		}
 
 		delCount, err := h.menuUC.DeleteMenuItem(ctx, mid, rid)
 		if err != nil {

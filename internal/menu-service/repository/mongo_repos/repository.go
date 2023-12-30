@@ -2,10 +2,10 @@ package repository
 
 import "go.mongodb.org/mongo-driver/mongo"
 
-type menuRepo struct {
+type menuRepoMongo struct {
 	dbc *mongo.Collection
 }
 
-func NewMenuRepo(dbc *mongo.Collection) *menuRepo {
-	return &menuRepo{dbc: dbc}
+func NewMenuRepo(dbc *mongo.Collection) *menuRepoMongo {
+	return &menuRepoMongo{dbc: dbc}
 }

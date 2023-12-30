@@ -5,7 +5,7 @@ import (
 	"menu-service/model"
 )
 
-func (r *menuRepo) InsertMenuItem(ctx context.Context, mitem *model.MenuItem) (interface{}, error) {
+func (r *menuRepoMongo) InsertMenuItem(ctx context.Context, mitem *model.MenuItem) (interface{}, error) {
 	result, err := r.dbc.InsertOne(ctx, mitem)
 	if err != nil {
 		return nil, err

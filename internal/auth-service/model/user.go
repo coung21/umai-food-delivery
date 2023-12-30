@@ -9,12 +9,12 @@ import (
 
 type User struct {
 	common.SqlModel
-	Name     string        `json:"name" gorm:"column:name;"`
-	Email    string        `json:"email" gorm:"column:email;"`
-	Avatar   *common.Image `json:"avatar" gorm:"column:avatar"`
-	Password string        `json:"password,omitempty" gorm:"column:password;"`
-	Phone    string        `json:"phone" gorm:"column:phone;"`
-	Role     string        `json:"-" gorm:"column:role;"`
+	Name     string        `json:"name" gorm:"column:name;not null"`
+	Email    string        `json:"email" gorm:"column:email;not null;unique"`
+	Avatar   *common.Image `json:"avatar" gorm:"column:avatar;type:json;"`
+	Password string        `json:"password,omitempty" gorm:"column:password;not null"`
+	Phone    string        `json:"phone" gorm:"column:phone;not null;unique"`
+	Role     string        `json:"-" gorm:"column:role;type:ENUM('customer', 'restaurant', 'shipper', 'admin');default:'customer';not null"`
 }
 
 func (User) TableName() string {

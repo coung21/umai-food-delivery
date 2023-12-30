@@ -13,7 +13,7 @@ import (
 func (g *GrpcServer) GetMenuItem(ctx context.Context, req *grpcPb.GetMenuItemReq) (*grpcPb.GetMenuItemRes, error) {
 	var resp *grpcPb.GetMenuItemRes
 
-	mitem, err := g.menuRepo.FindMenuItemByID(ctx, req.GetId())
+	mitem, err := g.menuRepo.FindMenuItemByID(ctx, int(req.GetId()))
 	if err != nil {
 		if err == common.NotFound {
 			return nil, status.Error(codes.NotFound, "Given Id Not Found")

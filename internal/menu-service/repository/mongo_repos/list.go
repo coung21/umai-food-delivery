@@ -7,7 +7,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 )
 
-func (r *menuRepo) ListMenuItemByResID(ctx context.Context, rid int) ([]model.MenuItem, error) {
+func (r *menuRepoMongo) ListMenuItemByResID(ctx context.Context, rid int) ([]model.MenuItem, error) {
 	var menuitems []model.MenuItem
 	result, err := r.dbc.Find(ctx, bson.M{"restaurant_id": rid})
 	if err != nil {
@@ -27,7 +27,7 @@ func (r *menuRepo) ListMenuItemByResID(ctx context.Context, rid int) ([]model.Me
 	return menuitems, nil
 }
 
-func (r *menuRepo) ListMenuItemByCategory(ctx context.Context, category string) ([]model.MenuItem, error) {
+func (r *menuRepoMongo) ListMenuItemByCategory(ctx context.Context, category string) ([]model.MenuItem, error) {
 	var menuitems []model.MenuItem
 	result, err := r.dbc.Find(ctx, bson.M{"category": category})
 	if err != nil {

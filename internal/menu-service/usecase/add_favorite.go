@@ -5,7 +5,7 @@ import (
 	"menu-service/model"
 )
 
-func (u *menuUC) AddFavorite(ctx context.Context, uid int, mid string) (*string, error) {
+func (u *menuUC) AddFavorite(ctx context.Context, uid int, mid int) (*int, error) {
 	// 1. check if menu is exist
 	mitem, err := u.menuRepo.FindMenuItemByID(ctx, mid)
 	if err != nil {
@@ -21,6 +21,6 @@ func (u *menuUC) AddFavorite(ctx context.Context, uid int, mid string) (*string,
 		return nil, err
 	}
 	// 4. return favorite id
-	favoriteID := mitem.ID.Hex() // Convert ObjectID to string
+	favoriteID := mitem.ID
 	return &favoriteID, nil
 }

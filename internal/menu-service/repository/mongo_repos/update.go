@@ -11,7 +11,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func (r *menuRepo) UpdateMenuItem(ctx context.Context, rid int, mid string, upd *model.UpdateMenuItem) (*model.MenuItem, error) {
+func (r *menuRepoMongo) UpdateMenuItem(ctx context.Context, rid int, mid string, upd *model.UpdateMenuItem) (*model.MenuItem, error) {
 	var newData model.MenuItem
 	objectID, err := primitive.ObjectIDFromHex(mid)
 	if err != nil {

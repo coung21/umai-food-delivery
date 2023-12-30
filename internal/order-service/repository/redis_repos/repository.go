@@ -30,7 +30,12 @@ func (c *CacheRepo) ListCart(ctx context.Context, id int) ([]model.CartItem, err
 			return nil, err
 		}
 
-		cartItems = append(cartItems, model.CartItem{ItemID: key, Quantity: quantity})
+		itemID, err := strconv.Atoi(key)
+		if err != nil {
+			return nil, err
+		}
+
+		cartItems = append(cartItems, model.CartItem{ItemID: itemID, Quantity: quantity})
 	}
 	return cartItems, nil
 }
@@ -50,8 +55,9 @@ func (c *CacheRepo) ListCart(ctx context.Context, id int) ([]model.CartItem, err
 // 	return int(val)
 // }
 
-func (c *CacheRepo) InsertCartItem(ctx context.Context, uid int, mid string, amount int) int {
-	val := c.cdb.HIncrBy(ctx, fmt.Sprintf("cart:%d", uid), mid, int64(amount)).Val()
+func (c *CacheRepo) InsertCartItem(ctx context.Context, uid int, mid int, amount int) int {
+	menuId := strconv.Itoa(mid)
+	val := c.cdb.HIncrBy(ctx, fmt.Sprintf("cart:%d", uid), menuId, int64(amount)).Val()
 
 	if val <= 0 {
 		c.DelCartItem(ctx, uid, mid)
@@ -60,7 +66,11 @@ func (c *CacheRepo) InsertCartItem(ctx context.Context, uid int, mid string, amo
 	return int(val)
 }
 
-func (c *CacheRepo) DelCartItem(ctx context.Context, uid int, mid ...string) int {
-	val := c.cdb.HDel(ctx, fmt.Sprintf("cart:%d", uid), mid...).Val()
+func (c *CacheRepo) DelCartItem(ctx context.Context, uid int, mid ...int) int {
+	strMid := make([]string, len(mid))
+	for i, m := range mid {
+		strMid[i] = strconv.Itoa(m)
+	}
+	val := c.cdb.HDel(ctx, fmt.Sprintf("cart:%d", uid), strMid...).Val()
 	return int(val)
 }

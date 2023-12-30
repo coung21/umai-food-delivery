@@ -10,7 +10,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-func (r *menuRepo) FindMenuItemByID(ctx context.Context, id string) (*model.MenuItem, error) {
+func (r *menuRepoMongo) FindMenuItemByID(ctx context.Context, id string) (*model.MenuItem, error) {
 	var mitem model.MenuItem
 	objectID, err := primitive.ObjectIDFromHex(id)
 	if err != nil {

@@ -3,6 +3,7 @@ package rest
 import (
 	"common"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -10,7 +11,11 @@ import (
 func (h *menuHandler) GetMenuItemHdl() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 
-		id := ctx.Param("menu_id")
+		id, err := strconv.Atoi(ctx.Param("menu_id"))
+		if err != nil {
+			ctx.JSON(http.StatusBadRequest, common.NewRestErr(http.StatusBadRequest, err.Error(), err))
+			return
+		}
 
 		data, err := h.menuUC.GetMenuItem(ctx, id)
 		if err != nil {

@@ -2,10 +2,10 @@ package repository
 
 import "gorm.io/gorm"
 
-type menuRepo struct {
+type menuRepoMysql struct {
 	db *gorm.DB
 }
 
-func NewMenuRepo(db *gorm.DB) *menuRepo {
-	return &menuRepo{db: db}
+func NewMenuRepo(db *gorm.DB) *menuRepoMysql {
+	return &menuRepoMysql{db: db}
 }

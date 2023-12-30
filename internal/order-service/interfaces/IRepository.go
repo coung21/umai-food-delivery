@@ -10,6 +10,6 @@ type CacheRepository interface {
 	// FindCartItem(ctx context.Context, uid int, mid string) bool
 	// InsertCartItem(ctx context.Context, uid int, mid string) int
 	// IncrCartItem(ctx context.Context, uid int, mid string, amount int) int
-	InsertCartItem(ctx context.Context, uid int, mid string, amount int) int
-	DelCartItem(ctx context.Context, uid int, mid ...string) int
+	InsertCartItem(ctx context.Context, uid int, mid int, amount int) int
+	DelCartItem(ctx context.Context, uid int, mid ...int) int
 }

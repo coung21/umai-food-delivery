@@ -6,7 +6,7 @@ import (
 	"log"
 )
 
-func (u *menuUC) DeleteMenuItem(ctx context.Context, mid string, rid int) (int, error) {
+func (u *menuUC) DeleteMenuItem(ctx context.Context, mid int, rid int) (int, error) {
 	crid := ctx.Value(common.CResId).(int)
 	mitem, err := u.menuRepo.FindMenuItemByID(ctx, mid)
 	if err != nil {

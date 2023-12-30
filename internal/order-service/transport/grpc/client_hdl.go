@@ -10,9 +10,9 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func GetMenuItemHdl(c grpcPb.MenuItemServiceClient, id string) (*string, error) {
+func GetMenuItemHdl(c grpcPb.MenuItemServiceClient, id int) (*string, error) {
 	resp, err := c.GetMenuItem(context.Background(), &grpcPb.GetMenuItemReq{
-		Id: id,
+		Id: int32(id),
 	})
 	if err != nil {
 		if errStatus, ok := status.FromError(err); ok {

@@ -4,11 +4,12 @@ import "common"
 
 type Order struct {
 	common.SqlModel
-	UserID     int
-	MenuItemID string
-	TotalBill  float32
-	Promo      int
-	Status     string
+	UserID     int              `json:"user_id" gorm:"column:user_id;not null;index"`
+	MenuItemID string           `json:"menu_item_id" gorm:"column:menu_item_id;not null"`
+	TotalBill  float32          `json:"total_bill" gorm:"column:total_bill;not null"`
+	DiscountID int              `json:"discount_id" gorm:"column:discount_id"`
+	Status     string           `json:"status" gorm:"column:status;not null"`
+	Location   *common.Location `json:"location" gorm:"column:location;not null;type:json"`
 }
 
 const (

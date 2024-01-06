@@ -35,3 +35,10 @@ func (r *authRepo) UpdateRestaurant(ctx context.Context, oldres *model.Restauran
 	}
 	return oldres, nil
 }
+
+func (r *authRepo) UpdateShipper(ctx context.Context, oldshipper *model.Shipper, upd *model.ShipperUpdate) (*model.Shipper, error) {
+	if err := r.db.Model(oldshipper).Updates(upd).Scan(oldshipper).Error; err != nil {
+		return nil, err
+	}
+	return oldshipper, nil
+}

@@ -30,3 +30,21 @@ func (r *authRepo) InsertRestaurant(ctx context.Context, res *model.Restaurant) 
 
 	return res.ID, nil
 }
+
+func (r *authRepo) InsertShipper(ctx context.Context, shipper *model.Shipper) (int, error) {
+	db := r.db.Begin()
+
+	result := db.Table(shipper.TableName()).Create(shipper)
+
+	if result.Error != nil {
+		db.Rollback()
+		return 0, result.Error
+	}
+
+	if err := db.Commit().Error; err != nil {
+		db.Rollback()
+		return 0, err
+	}
+
+	return shipper.ID, nil
+}

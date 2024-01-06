@@ -16,6 +16,10 @@ type Repository interface {
 	FindRestaurantByID(ctx context.Context, id int) (*model.Restaurant, error)
 	UpdateRestaurant(ctx context.Context, oldres *model.Restaurant, upd *model.RestaurantUpdate) (*model.Restaurant, error)
 	FindRestaurantByUserID(ctx context.Context, uid int) (*model.Restaurant, error)
+	InsertShipper(ctx context.Context, shipper *model.Shipper) (int, error)
+	UpdateShipper(ctx context.Context, oldshipper *model.Shipper, upd *model.ShipperUpdate) (*model.Shipper, error)
+	FindShipperByID(ctx context.Context, id int) (*model.Shipper, error)
+	FindShipperByUserID(ctx context.Context, uid int) (*model.Shipper, error)
 }
 
 type CacheRepository interface {

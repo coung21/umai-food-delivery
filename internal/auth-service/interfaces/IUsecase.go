@@ -13,4 +13,10 @@ type Usecase interface {
 	GetProfile(ctx context.Context, id int) (*model.User, error)
 	GetRestaurant(ctx context.Context, id int) (*model.Restaurant, error)
 	UpdateRestaurant(ctx context.Context, id int, udp *model.RestaurantUpdate) (*model.Restaurant, error)
+	GetShipper(ctx context.Context, id int) (*model.Shipper, error)
+	UpdateShipper(ctx context.Context, id int, udp *model.ShipperUpdate) (*model.Shipper, error)
+	ShipperRegister(ctx context.Context, shipper *model.Shipper) (int, error)
+	// GetAllShipper(ctx context.Context) ([]*model.Shipper, error)
+	// GetAllRestaurant(ctx context.Context) ([]*model.Restaurant, error)
+	// GetAllUser(ctx context.Context) ([]*model.User, error)
 }
